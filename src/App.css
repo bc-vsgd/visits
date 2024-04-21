@@ -1,1 +1,7 @@
 @import "./reset.css";
+@import "./components/Header/Header.css";
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
