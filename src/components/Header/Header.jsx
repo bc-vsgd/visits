@@ -25,6 +25,7 @@ const Header = ({ userToken, setUserToken }) => {
           <button
             onClick={() => {
               Cookies.remove("userToken");
+              setUserToken("");
               navigate("/");
             }}
           >

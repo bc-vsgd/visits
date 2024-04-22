@@ -6,7 +6,8 @@ import Cookies from "js-cookie";
 import HomePage from "./pages/HomePage/HomePage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import VisitFormPage from "./pages/VisitFormPage/VisitFormPage";
+import VisitTitleFormPage from "./pages/VisitTitleFormPage/VisitTitleFormPage";
+import SpotsFormsPage from "./pages/SpotsFormsPage/SpotsFormsPage";
 import VisitsPage from "./pages/VisitsPage/VisitsPage";
 // Components
 import Header from "./components/Header/Header";
@@ -22,11 +23,11 @@ function App() {
   useEffect(() => {
     const getToken = () => {
       const userToken = Cookies.get("userToken");
-      console.log("App, userToken: ", userToken);
+      // console.log("App, userToken: ", userToken);
       setUserToken(userToken);
     };
     getToken();
-  }, []);
+  }, [userToken]);
 
   return (
     <Router>
@@ -41,7 +42,14 @@ function App() {
           path="/author/login"
           element={<LoginPage url={url} setUserToken={setUserToken} />}
         />
-        <Route path="/visit/form" element={<VisitFormPage />} />
+        <Route
+          path="/visit/form"
+          element={<VisitTitleFormPage url={url} userToken={userToken} />}
+        />
+        <Route
+          path="visit/form/:id/spots"
+          element={<SpotsFormsPage url={url} />}
+        />
         {/* Useful ? */}
         <Route path="/visits" element={<VisitsPage />} />
       </Routes>

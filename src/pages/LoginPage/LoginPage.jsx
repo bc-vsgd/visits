@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 
 const LoginPage = ({ url, setUserToken }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -18,6 +20,7 @@ const LoginPage = ({ url, setUserToken }) => {
         const userToken = data.author.token;
         setUserToken(userToken);
         Cookies.set("userToken", userToken);
+        navigate("/");
       } else {
         setErrorMessage("All fields must be filled");
       }

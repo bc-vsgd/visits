@@ -1,5 +1,6 @@
 @import "./reset.css";
 @import "./components/Header/Header.css";
+@import "./components/OneSpotForm/OneSpotForm.css";
 
 .flex-row {
   display: flex;
