@@ -1,3 +1,9 @@
 .one-spot-form img {
   width: 300px;
 }
+.one-spot-form input {
+  height: 30px;
+}
+.one-spot-form button {
+  height: 30px;
+}

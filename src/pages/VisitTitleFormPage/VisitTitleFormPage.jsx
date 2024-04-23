@@ -21,7 +21,9 @@ const VisitTitleFormPage = ({ url, userToken }) => {
         );
         // console.log("visit form page, data: ", data);
         const id = data.data.visit._id;
-        navigate(`/visit/form/${id}/spots`);
+        navigate(`/visit/form/${id}/spots`, {
+          state: { title, city, details },
+        });
       } catch (error) {
         console.log("Visit form page, error: ", error);
       }
