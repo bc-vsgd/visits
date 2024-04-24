@@ -16,7 +16,7 @@ const LoginPage = ({ url, setUserToken }) => {
           email,
           password,
         });
-        console.log("log in, data", data);
+        // console.log("log in, data", data);
         const userToken = data.author.token;
         setUserToken(userToken);
         Cookies.set("userToken", userToken);

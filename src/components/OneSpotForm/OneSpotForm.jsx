@@ -20,7 +20,7 @@ const OneSpotForm = ({ url, id, setIsLoading, setDataLength }) => {
       setIsLoading(true);
 
       try {
-        console.log("form submit, categories: ", categories);
+        // console.log("form submit, categories: ", categories);
         const formData = new FormData();
         formData.append("title", title);
         formData.append("categories", JSON.stringify(categories));

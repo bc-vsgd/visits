@@ -21,8 +21,7 @@ const Signup = ({ url, setUserToken }) => {
               email,
               password,
             });
-            console.log("sign up page, response: ", response);
-            // console.log(response.data.author.token);
+            // console.log("sign up page, response: ", response);
             const userToken = response.data.author.token;
             Cookies.set("userToken", userToken);
             setUserToken(userToken);

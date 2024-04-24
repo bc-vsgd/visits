@@ -23,7 +23,6 @@ function App() {
   useEffect(() => {
     const getToken = () => {
       const userToken = Cookies.get("userToken");
-      // console.log("App, userToken: ", userToken);
       setUserToken(userToken);
     };
     getToken();

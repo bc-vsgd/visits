@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const VisitTitleFormPage = ({ url, userToken }) => {
-  // console.log("visit form page: token: ", userToken);
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [city, setCity] = useState("");
