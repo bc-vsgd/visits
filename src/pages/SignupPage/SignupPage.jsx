@@ -16,13 +16,13 @@ const Signup = ({ url, setUserToken }) => {
         if (password === password2) {
           // Create author account
           try {
-            const response = await axios.post(`${url}/visits/author/signup`, {
+            const { data } = await axios.post(`${url}/visits/author/signup`, {
               username,
               email,
               password,
             });
-            // console.log("sign up page, response: ", response);
-            const userToken = response.data.author.token;
+            // console.log("sign up page, data: ", data);
+            const userToken = data.data.author.token;
             Cookies.set("userToken", userToken);
             setUserToken(userToken);
           } catch (error) {
