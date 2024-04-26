@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import axios from "axios";
 import Cookies from "js-cookie";
 
 // Pages
 import HomePage from "./pages/HomePage/HomePage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
+// Pages: Create a visit
 import VisitTitleFormPage from "./pages/VisitTitleFormPage/VisitTitleFormPage";
 import SpotsFormsPage from "./pages/SpotsFormsPage/SpotsFormsPage";
+// Pages: See a visit
+import VisitPage from "./pages/VisitPage/VisitPage";
+// Page: Unused
 import VisitsPage from "./pages/VisitsPage/VisitsPage";
 // Components
 import Header from "./components/Header/Header";
@@ -20,9 +23,6 @@ import "./App.css";
 
 function App() {
   const [userToken, setUserToken] = useState("");
-
-  // const [isUserLoading, setIsUserLoading] = useState(true);
-  //
   const [userId, setUserId] = useState("");
   const [isTokenLoading, setIsTokenLoading] = useState(true);
 
@@ -42,10 +42,12 @@ function App() {
       <Router>
         <Header userToken={userToken} setUserToken={setUserToken} />
         <Routes>
+          {/* Home */}
           <Route
             path="/"
             element={<HomePage url={url} userToken={userToken} />}
           />
+          {/* Sign up */}
           <Route
             path="/author/signup"
             element={
@@ -56,6 +58,7 @@ function App() {
               />
             }
           />
+          {/* Log in */}
           <Route
             path="/author/login"
             element={
@@ -66,14 +69,18 @@ function App() {
               />
             }
           />
+          {/* Create visit: title form  */}
           <Route
             path="/visit/form"
             element={<VisitTitleFormPage url={url} userToken={userToken} />}
           />
+          {/* Unused */}
           <Route
             path="visit/form/:id/spots"
             element={<SpotsFormsPage url={url} />}
           />
+          {/* Display a visit */}
+          <Route path="visit/:id" element={<VisitPage url={url} />} />
         </Routes>
         <Footer />
       </Router>

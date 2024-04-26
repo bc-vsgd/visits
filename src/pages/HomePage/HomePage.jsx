@@ -96,9 +96,9 @@ const HomePage = ({ url, userToken }) => {
               {data.authorVisits.map((visit, index) => {
                 return (
                   <div key={index}>
-                    <p>
+                    <Link to={`/visit/${visit._id}`}>
                       {visit.title} - {visit.author.username}
-                    </p>
+                    </Link>
                   </div>
                 );
               })}
@@ -109,9 +109,9 @@ const HomePage = ({ url, userToken }) => {
               {data.otherVisits.map((visit, index) => {
                 return (
                   <div key={index}>
-                    <p>
+                    <Link to={`/visit/${visit._id}`}>
                       {visit.title} - {visit.author.username}
-                    </p>
+                    </Link>
                   </div>
                 );
               })}
@@ -125,9 +125,9 @@ const HomePage = ({ url, userToken }) => {
               {data.data.map((visit, index) => {
                 return (
                   <div key={index}>
-                    <p>
+                    <Link to={`/visit/${visit._id}`}>
                       {visit.title} - {visit.author.username}
-                    </p>
+                    </Link>
                   </div>
                 );
               })}
