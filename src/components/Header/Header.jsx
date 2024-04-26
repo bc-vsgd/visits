@@ -11,27 +11,32 @@ const Header = ({ userToken, setUserToken }) => {
             Home
           </Link>
         </div>
-        <div>
-          <Link className="header-link" to="/author/signup">
-            Sign up
-          </Link>
-        </div>
-        <div>
-          <Link className="header-link" to="/author/login">
-            Log in
-          </Link>
-        </div>
-        <div>
-          <button
-            onClick={() => {
-              Cookies.remove("userToken");
-              setUserToken("");
-              navigate("/");
-            }}
-          >
-            Log out
-          </button>
-        </div>
+        {!userToken ? (
+          <div>
+            <div>
+              <Link className="header-link" to="/author/signup">
+                Sign up
+              </Link>
+            </div>
+            <div>
+              <Link className="header-link" to="/author/login">
+                Log in
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <button
+              onClick={() => {
+                Cookies.remove("userToken");
+                setUserToken("");
+                navigate("/");
+              }}
+            >
+              Log out
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );

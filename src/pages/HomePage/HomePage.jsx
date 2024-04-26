@@ -97,7 +97,7 @@ const HomePage = ({ url, userToken }) => {
                 return (
                   <div key={index}>
                     <p>
-                      {visit.title} - {visit._id}
+                      {visit.title} - {visit.author.username}
                     </p>
                   </div>
                 );
@@ -110,7 +110,7 @@ const HomePage = ({ url, userToken }) => {
                 return (
                   <div key={index}>
                     <p>
-                      {visit.title} - {visit._id}
+                      {visit.title} - {visit.author.username}
                     </p>
                   </div>
                 );
@@ -126,7 +126,7 @@ const HomePage = ({ url, userToken }) => {
                 return (
                   <div key={index}>
                     <p>
-                      {visit.title} - {visit._id}
+                      {visit.title} - {visit.author.username}
                     </p>
                   </div>
                 );

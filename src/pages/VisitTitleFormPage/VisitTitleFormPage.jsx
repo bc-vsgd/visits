@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
 
 const VisitTitleFormPage = ({ url, userToken }) => {
@@ -32,7 +32,7 @@ const VisitTitleFormPage = ({ url, userToken }) => {
   };
 
   return !userToken ? (
-    <div>Not userToken</div>
+    <Navigate to="/author/login" state={{ from: "/visit/form" }} />
   ) : (
     <main>
       <div>

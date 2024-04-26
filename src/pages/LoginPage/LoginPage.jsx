@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 
 const LoginPage = ({ url, setUserToken }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -20,7 +21,12 @@ const LoginPage = ({ url, setUserToken }) => {
         const userToken = data.author.token;
         Cookies.set("userToken", userToken);
         setUserToken(userToken);
-        navigate("/");
+        // Back to home page or to visit title creation page
+        if (location.state) {
+          navigate(location.state.from);
+        } else {
+          navigate("/");
+        }
       } else {
         setErrorMessage("All fields must be filled");
       }
@@ -52,6 +58,14 @@ const LoginPage = ({ url, setUserToken }) => {
           <button>Log in</button>
           <div>{errorMessage}</div>
         </form>
+        {/* Link to Sign up page */}
+        {location.state ? (
+          <Link to="/author/signup" state={{ from: location.state.from }}>
+            Create an account
+          </Link>
+        ) : (
+          <Link to="/author/signup">Create an account</Link>
+        )}
       </div>
     </main>
   );

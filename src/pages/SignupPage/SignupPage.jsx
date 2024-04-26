@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 
 const Signup = ({ url, setUserToken }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,10 +24,17 @@ const Signup = ({ url, setUserToken }) => {
               email,
               password,
             });
-            // console.log("sign up page, data: ", data);
-            const userToken = data.data.author.token;
+            // console.log("sign up page, data: ", data.author);
+            const userToken = data.author.token;
             Cookies.set("userToken", userToken);
             setUserToken(userToken);
+            // Back to home page or to Visit title (creation) page
+            // console.log("sign up page, location: ", location);
+            if (location.state) {
+              navigate(location.state.from);
+            } else {
+              navigate("/");
+            }
           } catch (error) {
             console.log("Sign up page, error: ", error);
             setErrorMessage("This email already exists");
@@ -82,6 +92,14 @@ const Signup = ({ url, setUserToken }) => {
           <button>Sign up</button>
           <div>{errorMessage}</div>
         </form>
+        {/* Link to Log in page */}
+        {location.state ? (
+          <Link to="/author/login" state={{ from: location.state.from }}>
+            Already have an account ?
+          </Link>
+        ) : (
+          <Link to="/author/login">Already have an account ?</Link>
+        )}
       </div>
     </main>
   );
