@@ -20,55 +20,31 @@ import "./App.css";
 
 function App() {
   const [userToken, setUserToken] = useState("");
+
+  // const [isUserLoading, setIsUserLoading] = useState(true);
   //
   const [userId, setUserId] = useState("");
   const [isTokenLoading, setIsTokenLoading] = useState(true);
-  const [isUserIdLoading, setIsUserIdLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userToken = Cookies.get("userToken");
         setUserToken(userToken);
-      } catch (error) {
-        // console.log("App, useEffect 1, error: ", error);
-      }
+      } catch (error) {}
       setIsTokenLoading(false);
     };
     fetchData();
-    // console.log("App, user token: ", userToken);
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!isTokenLoading && userToken) {
-          const { data } = await axios.get(`${url}/visits/author/author`, {
-            headers: { authorization: userToken },
-          });
-          setUserId(data.data[0]._id);
-        } else {
-          setUserId("");
-        }
-      } catch (error) {
-        // console.log("App, useEffect 2, error: ", error);
-      }
-      setIsUserIdLoading(false);
-    };
-    fetchData();
-  }, [isTokenLoading, userToken]);
-
   return (
-    !isTokenLoading &&
-    !isUserIdLoading && (
+    !isTokenLoading && (
       <Router>
         <Header userToken={userToken} setUserToken={setUserToken} />
         <Routes>
           <Route
             path="/"
-            element={
-              <HomePage url={url} userToken={userToken} userId={userId} />
-            }
+            element={<HomePage url={url} userToken={userToken} />}
           />
           <Route
             path="/author/signup"

@@ -5,42 +5,80 @@ import axios from "axios";
 // Components
 import Loader from "../../components/Loader/Loader";
 
-const HomePage = ({ url, userToken, userId }) => {
+const HomePage = ({ url, userToken }) => {
+  // 1st useEffect (data = user)
+  const [userData, setUserData] = useState(null);
+  const [userId, setUserId] = useState("");
+  const [isUserLoading, setIsUserLoading] = useState(true);
+  // 2nd useEffect (data = visits)
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isUserData, setIsUserData] = useState(false);
-  const [token, setToken] = useState(userToken);
-  const [id, setId] = useState(userId);
-  console.log("home page, user token: ", userToken);
-  console.log("home page, user id: ", userId);
+  // console.log("home page, user token: ", userToken);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log("fetch data");
-        if (id || token) {
-          if (id) {
-            const { data } = await axios.get(`${url}/visits/${id}`);
-            console.log("Home page: data: ", data);
-            console.log("Home page: data - author visits: ", data.authorVisits);
-            //
-            setData(data);
-
-            setIsUserData(true);
+  // Get user data
+  useEffect(
+    () => {
+      const fetchData = async () => {
+        // console.log("home page, fetch 1");
+        setIsUserLoading(true);
+        try {
+          if (userToken) {
+            const { data } = await axios.get(`${url}/visits/author/author`, {
+              headers: { authorization: userToken },
+            });
+            // console.log("home page, fetch 1, user data: ", data.data[0]);
+            setUserData(data.data[0]);
+            setUserId(data.data[0]._id);
+          } else {
+            setUserData(null);
+            setUserId("");
           }
-        } else {
-          const { data } = await axios.get(`${url}/visits`);
-          console.log("Home page: data: ", data);
-          setData(data);
+        } catch (error) {
+          console.log("Home page, error: ", error);
         }
-      } catch (error) {
-        console.log("Home page, error: ", error);
-      }
-      setIsLoading(false);
-    };
+        // userToken or no userToken
+        setIsUserLoading(false);
+      };
+      fetchData();
+    },
+    // Reload when log out
+    [userToken]
+  );
 
-    fetchData();
-  }, [id, token]);
+  // Get visits data
+  useEffect(
+    () => {
+      const fetchData = async () => {
+        setIsLoading(true);
+        if (!isUserLoading) {
+          // console.log("fetchData user");
+          // console.log("fetch 2: user id: ", userId);
+          // console.log("fetch 2: user loading: ", isUserLoading);
+          // console.log("fetch 2: user token: ", userToken);
+          try {
+            // console.log("fetch 2: try: user token: ", userToken);
+            if (userToken) {
+              if (userId) {
+                const { data } = await axios.get(`${url}/visits/${userId}`);
+                // console.log("home page, fetch 2, data: ", data);
+                setData(data);
+              }
+            } else {
+              const { data } = await axios.get(`${url}/visits`);
+              // console.log("home page, fetch 2, data: ", data);
+              setData(data);
+            }
+          } catch (error) {
+            console.log("Home page, error: ", error);
+          }
+          setIsLoading(false);
+        }
+      };
+      fetchData();
+    },
+    // Reload when log out
+    [isUserLoading, userToken, userId]
+  );
 
   return isLoading ? (
     <Loader />
@@ -49,18 +87,51 @@ const HomePage = ({ url, userToken, userId }) => {
       <h1>Home Page</h1>
 
       <div>
-        <h2>Visits</h2>
-        {id && (
+        {/* If user logged: his/her visits */}
+        {userId ? (
           <div>
-            {data.authorVisits.map((visit, index) => {
-              return (
-                <div key={index}>
-                  <p>
-                    {visit.title} - {visit._id}
-                  </p>
-                </div>
-              );
-            })}
+            <h2>YOUR VISITS</h2>
+
+            <div>
+              {data.authorVisits.map((visit, index) => {
+                return (
+                  <div key={index}>
+                    <p>
+                      {visit.title} - {visit._id}
+                    </p>
+                  </div>
+                );
+              })}
+              {/* User logged: other visits */}
+            </div>
+            <h2>OTHER VISITS</h2>
+            <div>
+              {data.otherVisits.map((visit, index) => {
+                return (
+                  <div key={index}>
+                    <p>
+                      {visit.title} - {visit._id}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          // User logged out
+          <div>
+            <h2>VISITS</h2>
+            <div>
+              {data.data.map((visit, index) => {
+                return (
+                  <div key={index}>
+                    <p>
+                      {visit.title} - {visit._id}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
         <Link to="/visit/form">
