@@ -2,6 +2,7 @@
 @import "./components/Header/Header.css";
 @import "./components/OneSpotForm/OneSpotForm.css";
 @import "./pages/VisitPage/VisitPage.css";
+@import "./components/OneSpotModal/OneSpotModal.css";
 
 .flex-row {
   display: flex;

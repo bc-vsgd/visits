@@ -18,8 +18,8 @@ const SpotsFormsPage = ({ url }) => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(`${url}/visit/${id}/spots`);
-        // console.log("Spots forms page, data: ", data.Spots);
-        setData(data.Spots);
+        // console.log("Spots forms page, data: ", data.data);
+        setData(data.data);
       } catch (error) {
         console.log("Spots forms page, error: ", error);
       }

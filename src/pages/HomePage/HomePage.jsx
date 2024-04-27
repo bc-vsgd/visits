@@ -87,10 +87,14 @@ const HomePage = ({ url, userToken }) => {
       <h1>Home Page</h1>
 
       <div>
+        {/* No visit */}
+        {/* {!data ? <div>No visit yet</div> : 
+        } */}
+
         {/* If user logged: his/her visits */}
         {userId ? (
           <div>
-            <h2>YOUR VISITS</h2>
+            <h2>MY VISITS</h2>
 
             <div>
               {data.authorVisits.map((visit, index) => {

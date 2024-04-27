@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 // Components
 import Loader from "../../components/Loader/Loader";
-import OneSpot from "../../components/OneSpot/OneSpot";
+import OneSpotModal from "../../components/OneSpotModal/OneSpotModal";
 
 const VisitPage = ({ url }) => {
   const { id } = useParams();
@@ -11,6 +11,9 @@ const VisitPage = ({ url }) => {
   const [spotsData, setSpotsData] = useState(null);
   const [isVisitLoading, setIsVisitLoading] = useState(true);
   const [isSpotsLoading, setIsSpotLoading] = useState(true);
+  // Spot modal
+  const [isSpotModalVisible, setIsSpotModalVisible] = useState(false);
+  const [spotToDisplay, setSpotToDisplay] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,12 +55,24 @@ const VisitPage = ({ url }) => {
         {spotsData.map((spot, index) => {
           return (
             <div key={index}>
-              <div>
+              <div
+                onClick={() => {
+                  setIsSpotModalVisible(!isSpotModalVisible);
+                  // console.log("visit page, clic on spot div, spot: ", spot);
+                  setSpotToDisplay(spot);
+                }}
+              >
                 <div>{spot.title}</div>
                 {spot.spot_image && (
                   <img src={spot.spot_image.secure_url} alt={spot.title} />
                 )}
               </div>
+              {isSpotModalVisible && (
+                <OneSpotModal
+                  spot={spotToDisplay}
+                  setIsSpotModalVisible={setIsSpotModalVisible}
+                />
+              )}
             </div>
           );
         })}
