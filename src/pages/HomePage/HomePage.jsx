@@ -60,12 +60,12 @@ const HomePage = ({ url, userToken }) => {
             if (userToken) {
               if (userId) {
                 const { data } = await axios.get(`${url}/visits/${userId}`);
-                // console.log("home page, fetch 2, data: ", data);
+                console.log("home page, fetch 2, data: ", data);
                 setData(data);
               }
             } else {
               const { data } = await axios.get(`${url}/visits`);
-              // console.log("home page, fetch 2, data: ", data);
+              console.log("home page, fetch 2, data: ", data);
               setData(data);
             }
           } catch (error) {
@@ -88,27 +88,30 @@ const HomePage = ({ url, userToken }) => {
 
       <div>
         {/* No visit */}
-        {/* {!data ? <div>No visit yet</div> : 
-        } */}
-
-        {/* If user logged: his/her visits */}
-        {userId ? (
+        {data.foundVisits.length === 0 ? (
+          <div>NO VISIT YET</div>
+        ) : // Visits & user logged
+        userId ? (
           <div>
-            <h2>MY VISITS</h2>
-
-            <div>
-              {data.authorVisits.map((visit, index) => {
-                return (
-                  <div key={index}>
-                    <Link to={`/visit/${visit._id}`}>
-                      {visit.title} - {visit.author.username}
-                    </Link>
-                  </div>
-                );
-              })}
-              {/* User logged: other visits */}
-            </div>
-            <h2>OTHER VISITS</h2>
+            {/* User's visits */}
+            {data.authorVisits.length > 0 && (
+              <div>
+                <h2>MY VISITS</h2>
+                <div>
+                  {data.authorVisits.map((visit, index) => {
+                    return (
+                      <div key={index}>
+                        <Link to={`/visit/${visit._id}`}>
+                          {visit.title} - {visit.author.username}
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            {/* User logged: other visits */}
+            <h2>VISITS</h2>
             <div>
               {data.otherVisits.map((visit, index) => {
                 return (
@@ -122,11 +125,12 @@ const HomePage = ({ url, userToken }) => {
             </div>
           </div>
         ) : (
-          // User logged out
+          //
+          // User logged out: all visits
           <div>
             <h2>VISITS</h2>
             <div>
-              {data.data.map((visit, index) => {
+              {data.foundVisits.map((visit, index) => {
                 return (
                   <div key={index}>
                     <Link to={`/visit/${visit._id}`}>
@@ -138,6 +142,7 @@ const HomePage = ({ url, userToken }) => {
             </div>
           </div>
         )}
+        {/* Link to create a visit page */}
         <Link to="/visit/form">
           <p>Create a new visit</p>
         </Link>

@@ -76,11 +76,11 @@ function App() {
           />
           {/* Unused */}
           <Route
-            path="visit/form/:id/spots"
+            path="/visit/form/:id/spots"
             element={<SpotsFormsPage url={url} />}
           />
           {/* Display a visit */}
-          <Route path="visit/:id" element={<VisitPage url={url} />} />
+          <Route path="/visit/:id" element={<VisitPage url={url} />} />
         </Routes>
         <Footer />
       </Router>

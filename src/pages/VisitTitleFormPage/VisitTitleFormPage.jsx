@@ -64,7 +64,7 @@ const VisitTitleFormPage = ({ url, userToken }) => {
                 setDetails(event.target.value);
               }}
             />
-            <button>Record visit title</button>
+            <button>Add a spot</button>
             <div>{errorMessage}</div>
           </form>
         </div>

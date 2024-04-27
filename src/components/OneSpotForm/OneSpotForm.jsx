@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const OneSpotForm = ({ url, id, setIsLoading, setDataLength }) => {
+const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
+  console.log("one spot form, dataLength: ", dataLength);
+  const navigate = useNavigate();
   // state id: visit id
   const [files, setFiles] = useState({});
   const [title, setTitle] = useState("");
@@ -149,6 +152,16 @@ const OneSpotForm = ({ url, id, setIsLoading, setDataLength }) => {
         <button>Add this spot</button>
         <div>{errorMessage}</div>
       </form>
+      {/* Button: register the visit */}
+      {dataLength > 0 && (
+        <button
+          onClick={() => {
+            navigate(`/visit/${id}`);
+          }}
+        >
+          Close this visit
+        </button>
+      )}
     </div>
   );
 };

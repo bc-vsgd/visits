@@ -77,6 +77,7 @@ const VisitPage = ({ url }) => {
           );
         })}
       </div>
+      <Link to="/visit/form">Create a visit</Link>
     </main>
   );
 };

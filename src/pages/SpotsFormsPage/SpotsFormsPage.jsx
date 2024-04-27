@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 // Components
 import Loader from "../../components/Loader/Loader";
@@ -9,8 +9,10 @@ const SpotsFormsPage = ({ url }) => {
   // id: visit id
   const { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const { title, city, details } = location.state;
   const [data, setData] = useState([]);
+  // Spots number
   const [dataLength, setDataLength] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -31,21 +33,25 @@ const SpotsFormsPage = ({ url }) => {
     <Loader />
   ) : (
     <div>
+      {/* Display visit title */}
       <div>
         <p>{title}</p>
         <p>{city}</p>
         <p>{details}</p>
       </div>
+      {/* Display existing spots */}
       <div>
         {data.map((spot, index) => {
           return <div key={index}>{spot.title}</div>;
         })}
       </div>
+      {/* New spot form */}
       <div>
         <OneSpotForm
           url={url}
           id={id}
           setIsLoading={setIsLoading}
+          dataLength={dataLength}
           setDataLength={setDataLength}
         />
       </div>
