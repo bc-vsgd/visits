@@ -37,6 +37,7 @@ const VisitTitleFormPage = ({ url, userToken }) => {
     <main>
       <div>
         <h1>New visit</h1>
+        {/* Title form component ? */}
         <div>
           <form onSubmit={visitSubmit}>
             <input
@@ -68,6 +69,7 @@ const VisitTitleFormPage = ({ url, userToken }) => {
             <div>{errorMessage}</div>
           </form>
         </div>
+        {/* Title form component ? */}
       </div>
     </main>
   );

@@ -11,6 +11,8 @@ import VisitTitleFormPage from "./pages/VisitTitleFormPage/VisitTitleFormPage";
 import SpotsFormsPage from "./pages/SpotsFormsPage/SpotsFormsPage";
 // Pages: See a visit
 import VisitPage from "./pages/VisitPage/VisitPage";
+// Update a visit
+import VisitUpdatePage from "./pages/VisitUpdatePage/VisitUpdatePage";
 // Page: Unused
 import VisitsPage from "./pages/VisitsPage/VisitsPage";
 // Components
@@ -81,6 +83,11 @@ function App() {
           />
           {/* Display a visit */}
           <Route path="/visit/:id" element={<VisitPage url={url} />} />
+          {/* Update a visit */}
+          <Route
+            path="/visit/:id/update"
+            element={<VisitUpdatePage url={url} />}
+          />
         </Routes>
         <Footer />
       </Router>

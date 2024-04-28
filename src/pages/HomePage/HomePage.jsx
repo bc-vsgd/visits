@@ -51,10 +51,6 @@ const HomePage = ({ url, userToken }) => {
       const fetchData = async () => {
         setIsLoading(true);
         if (!isUserLoading) {
-          // console.log("fetchData user");
-          // console.log("fetch 2: user id: ", userId);
-          // console.log("fetch 2: user loading: ", isUserLoading);
-          // console.log("fetch 2: user token: ", userToken);
           try {
             // console.log("fetch 2: try: user token: ", userToken);
             if (userToken) {
@@ -101,7 +97,12 @@ const HomePage = ({ url, userToken }) => {
                   {data.authorVisits.map((visit, index) => {
                     return (
                       <div key={index}>
-                        <Link to={`/visit/${visit._id}`}>
+                        <Link
+                          to={`/visit/${visit._id}`}
+                          //
+                          state={{ userToken: userToken }}
+                          //
+                        >
                           {visit.title} - {visit.author.username}
                         </Link>
                       </div>

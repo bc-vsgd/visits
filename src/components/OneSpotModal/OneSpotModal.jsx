@@ -77,14 +77,14 @@ const OneSpotModal = ({ spot, setIsSpotModalVisible }) => {
             </button>
           )}
           <p>{spot.description}</p>
-          <p>
+          {/* <p>
             <a
               href="https://www.w3schools.com/tags/att_a_target.asp"
               target="_parent"
             >
               Link
             </a>
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ const SpotsFormsPage = ({ url }) => {
   // id: visit id
   const { id } = useParams();
   const location = useLocation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { title, city, details } = location.state;
   const [data, setData] = useState([]);
   // Spots number
