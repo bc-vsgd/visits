@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 // Components
 import OneSpotForm from "../components/OneSpotForm";
 // MUI components
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, TextField } from "@mui/material";
 
 const VisitUpdatePage = ({ url }) => {
   const location = useLocation();
@@ -29,7 +29,8 @@ const VisitUpdatePage = ({ url }) => {
         <Typography variant="h4">Update visit</Typography>
         {/* Title form component ? */}
         <Box component="div">
-          <form onSubmit={visitSubmit}>
+          <Box component="form" onSubmit={visitSubmit}>
+            {/* <TextField variant="standard" /> */}
             <input
               type="text"
               placeholder="Visit title"
@@ -57,7 +58,7 @@ const VisitUpdatePage = ({ url }) => {
             />
             {/* <button>Add a spot</button> */}
             <div>{errorMessage}</div>
-          </form>
+          </Box>
         </Box>
         {/* Title form component ? */}
         {/*  */}

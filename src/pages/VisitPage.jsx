@@ -5,7 +5,7 @@ import axios from "axios";
 import Loader from "../components/Loader";
 import OneSpotModal from "../components/OneSpotModal/OneSpotModal";
 // MUI components
-import { Box } from "@mui/material";
+import { Box, Card, CardMedia, CardContent, Typography } from "@mui/material";
 
 const VisitPage = ({ url }) => {
   const location = useLocation();
@@ -60,32 +60,34 @@ const VisitPage = ({ url }) => {
         {spotsData &&
           spotsData.map((spot, index) => {
             return (
-              <Box component="div" key={index}>
-                <Box
-                  component="div"
-                  onClick={() => {
-                    setIsSpotModalVisible(!isSpotModalVisible);
-                    // console.log("visit page, clic on spot div, spot: ", spot);
-                    setSpotToDisplay(spot);
-                  }}
-                >
-                  <Box component="div">{spot.title}</Box>
-                  {spot.spot_image && (
-                    // <img src={spot.spot_image.secure_url} alt={spot.title} />
-                    <img
-                      className="w-52"
-                      src={spot.spot_image.secure_url}
-                      alt={spot.title}
-                    />
-                  )}
-                </Box>
+              <Card
+                className="w-80"
+                component="div"
+                key={index}
+                onClick={() => {
+                  setIsSpotModalVisible(!isSpotModalVisible);
+                  // console.log("visit page, clic on spot div, spot: ", spot);
+                  setSpotToDisplay(spot);
+                }}
+              >
+                <CardContent>
+                  <Typography component="div">{spot.title}</Typography>
+                </CardContent>
+
+                {spot.spot_image && (
+                  <CardMedia
+                    component="img"
+                    image={spot.spot_image.secure_url}
+                    alt={spot.title}
+                  />
+                )}
                 {isSpotModalVisible && (
                   <OneSpotModal
                     spot={spotToDisplay}
                     setIsSpotModalVisible={setIsSpotModalVisible}
                   />
                 )}
-              </Box>
+              </Card>
             );
           })}
       </Box>

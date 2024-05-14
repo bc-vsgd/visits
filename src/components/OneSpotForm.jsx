@@ -2,7 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // MUI components
-import { Box, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Card,
+  CardMedia,
+  CardActions,
+  Input,
+} from "@mui/material";
 
 const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
   // console.log("one spot form, dataLength: ", dataLength);
@@ -17,7 +25,7 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
   // console.log("categories: ", categories.length);
 
   // Form submit
-  const spotSubmit = async (event) => {
+  const spotFormSubmit = async (event) => {
     event.preventDefault();
     // Conditions: pictures + title
     if (Object.keys(files).length > 0 && title) {
@@ -78,14 +86,15 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
 
   return (
     <Box component="div">
-      {/* <form onSubmit={spotSubmit} className="flex-col one-spot-form"> */}
-      <form onSubmit={spotSubmit} className="flex-col ">
+      <Box component="form" className="flex-col ">
         {/* Pictures */}
-        <div>
-          <input
+        <Box component="div">
+          <Input
+            inputProps={{
+              multiple: true,
+            }}
             className="h-8"
             type="file"
-            multiple
             onChange={(event) => {
               // Pictures already selected: add new pictures
               if (Object.entries(files).length > 0) {
@@ -106,73 +115,72 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
           />
           {/* Display pictures */}
           {Object.keys(files).length !== 0 && (
-            <div className="flex">
+            <Box component="div" className="flex">
               {Object.keys(files).map((fileKey, index) => {
                 return (
-                  <div key={index}>
-                    <img
+                  <Card key={index}>
+                    <CardMedia
                       className="w-80"
-                      src={URL.createObjectURL(files[fileKey])}
+                      component="img"
                       alt="Picture"
+                      image={URL.createObjectURL(files[fileKey])}
                     />
-                    <button
-                      className="h-8 w-24"
-                      type="button"
-                      onClick={() => {
-                        deleteFile(fileKey);
-                      }}
-                    >
-                      X
-                    </button>
-                  </div>
+                    <CardActions>
+                      <Button
+                        onClick={() => {
+                          deleteFile(fileKey);
+                        }}
+                      >
+                        X
+                      </Button>
+                    </CardActions>
+                  </Card>
                 );
               })}
-            </div>
+            </Box>
           )}
-        </div>
+        </Box>
 
-        <div className="flex">
+        <Box component="div" className="flex">
           {/* Title */}
-          <input
+          <TextField
+            required
             className="h-8"
-            type="text"
-            placeholder="Title"
-            value={title}
+            variant="standard"
+            label="Title"
             onChange={(event) => {
               setTitle(event.target.value);
               setErrorMessage("");
             }}
           />
           {/* Description */}
-          <input
+          <TextField
             className="h-8"
-            type="text"
-            placeholder="Description"
-            value={description}
+            variant="standard"
+            label="Description"
             onChange={(event) => {
               setDescription(event.target.value);
             }}
           />
           {/* Categories */}
-          <div className="flex-col">
+          <Box component="div" className="flex-col">
             {categories.map((category, index) => {
               return (
-                <div key={index}>
-                  <div className="flex">
-                    <input
+                <Box component="div" key={index}>
+                  <Box component="div" className="flex">
+                    <TextField
                       className="h-8"
-                      type="text"
-                      placeholder={`Categories: ${index}`}
-                      value={categories[index]}
+                      variant="standard"
+                      label={`Categories: ${index}`}
+                      defaultValue={categories[index]}
                       onChange={(event) => {
                         const arr = [...categories];
                         arr[index] = event.target.value;
                         setCategories(arr);
                       }}
                     />
-                    <button
+                    <Button
                       className="h-8 w-24"
-                      type="button"
                       onClick={() => {
                         const arr = [...categories];
                         arr.push("");
@@ -180,27 +188,28 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
                       }}
                     >
                       Add category
-                    </button>
-                  </div>
-                </div>
+                    </Button>
+                  </Box>
+                </Box>
               );
             })}
-          </div>
+          </Box>
           {/* Link */}
-          <input
+          <TextField
+            variant="standard"
             className="h-8"
-            type="text"
-            placeholder="Link"
-            value={link}
+            label="Link"
             onChange={(event) => {
               setLink(event.target.value);
             }}
           />
-        </div>
+        </Box>
         {/* Button: add the spot */}
-        <button className="h-8 w-24">Add this spot</button>
-        <div>{errorMessage}</div>
-      </form>
+        <Button className="h-8 w-24" onClick={spotFormSubmit}>
+          Add this spot
+        </Button>
+        <Box component="div">{errorMessage}</Box>
+      </Box>
       {/* Button: register the visit */}
       {dataLength > 0 && (
         <Button

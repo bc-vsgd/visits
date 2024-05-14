@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
 // MUI components
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, TextField, Button } from "@mui/material";
 
 const VisitTitleFormPage = ({ url, userToken }) => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const VisitTitleFormPage = ({ url, userToken }) => {
   const [details, setDetails] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const visitSubmit = async (event) => {
+  const visitFormSubmit = async (event) => {
     event.preventDefault();
     if (title) {
       try {
@@ -41,35 +41,33 @@ const VisitTitleFormPage = ({ url, userToken }) => {
         <Typography variant="h4">New visit</Typography>
         {/* Title form component ? */}
         <Box component="div">
-          <form onSubmit={visitSubmit}>
-            <input
-              type="text"
-              placeholder="Visit title"
-              value={title}
+          <Box component="form">
+            <TextField
+              required
+              variant="standard"
+              label="Visit title"
               onChange={(event) => {
                 setTitle(event.target.value);
                 setErrorMessage("");
               }}
             />
-            <input
-              type="text"
-              placeholder="City"
-              value={city}
+            <TextField
+              variant="standard"
+              label="City"
               onChange={(event) => {
                 setCity(event.target.value);
               }}
             />
-            <input
-              type="text"
-              placeholder="City details ..."
-              value={details}
+            <TextField
+              variant="standard"
+              label="City details ..."
               onChange={(event) => {
                 setDetails(event.target.value);
               }}
             />
-            <button>Add a spot</button>
-            <div>{errorMessage}</div>
-          </form>
+            <Button onClick={visitFormSubmit}>Add a spot</Button>
+            <Box component="div">{errorMessage}</Box>
+          </Box>
         </Box>
         {/* Title form component ? */}
       </Box>

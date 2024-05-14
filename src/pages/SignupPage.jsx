@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 // MUI components
-import { Box } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 
 const Signup = ({ url, setUserToken }) => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Signup = ({ url, setUserToken }) => {
   const [password2, setPassword2] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
       if (username && email && password && password2) {
@@ -55,46 +55,46 @@ const Signup = ({ url, setUserToken }) => {
   return (
     <Box component="main" className="font-roboto">
       <Box component="div">
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
+        <Box component="form">
+          <TextField
+            required
+            variant="standard"
+            label="Username"
             onChange={(event) => {
               setUsername(event.target.value);
               setErrorMessage("");
             }}
           />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
+          <TextField
+            required
+            variant="standard"
+            label="Email"
             onChange={(event) => {
               setEmail(event.target.value);
               setErrorMessage("");
             }}
           />
-          <input
-            type="text"
-            placeholder="Password"
-            value={password}
+          <TextField
+            required
+            variant="standard"
+            label="Password"
             onChange={(event) => {
               setPassword(event.target.value);
               setErrorMessage("");
             }}
           />
-          <input
-            type="text"
-            placeholder="Confirm password"
-            value={password2}
+          <TextField
+            required
+            variant="standard"
+            label="Confirm password"
             onChange={(event) => {
               setPassword2(event.target.value);
               setErrorMessage("");
             }}
           />
-          <button>Sign up</button>
-          <div>{errorMessage}</div>
-        </form>
+          <Button onClick={handleFormSubmit}>Sign up</Button>
+          <Box component="div">{errorMessage}</Box>
+        </Box>
         {/* Link to Log in page */}
         {location.state ? (
           <Link to="/author/login" state={{ from: location.state.from }}>

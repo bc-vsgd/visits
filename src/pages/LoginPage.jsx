@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 // MUI components
-import { Box } from "@mui/material";
+import { Box, TextField, Button } from "@mui/material";
 
 const LoginPage = ({ url, setUserToken }) => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const LoginPage = ({ url, setUserToken }) => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
       if (email && password) {
@@ -41,26 +41,26 @@ const LoginPage = ({ url, setUserToken }) => {
   return (
     <Box component="main" className="font-roboto">
       <Box component="div">
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
+        <Box component="form">
+          <TextField
+            required
+            variant="standard"
+            label="Email"
             onChange={(event) => {
               setEmail(event.target.value);
             }}
           />
-          <input
-            type="text"
-            placeholder="Password"
-            value={password}
+          <TextField
+            required
+            variant="standard"
+            label="Password"
             onChange={(event) => {
               setPassword(event.target.value);
             }}
           />
-          <button>Log in</button>
-          <div>{errorMessage}</div>
-        </form>
+          <Button onClick={handleFormSubmit}>Log in</Button>
+          <Box component="div">{errorMessage}</Box>
+        </Box>
         {/* Link to Sign up page */}
         {location.state ? (
           <Link to="/author/signup" state={{ from: location.state.from }}>
