@@ -3,9 +3,17 @@ import { useParams, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 // Components
 import Loader from "../components/Loader";
-import OneSpotModal from "../components/OneSpotModal/OneSpotModal";
+// import OneSpotModal from "../components/OneSpotModal/OneSpotModal";
+import SpotDisplayModal from "../components/SpotDisplayModal";
 // MUI components
-import { Box, Card, CardMedia, CardContent, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Button,
+} from "@mui/material";
 
 const VisitPage = ({ url }) => {
   const location = useLocation();
@@ -15,9 +23,18 @@ const VisitPage = ({ url }) => {
   const [spotsData, setSpotsData] = useState(null);
   const [isVisitLoading, setIsVisitLoading] = useState(true);
   const [isSpotsLoading, setIsSpotLoading] = useState(true);
-  // Spot modal
-  const [isSpotModalVisible, setIsSpotModalVisible] = useState(false);
-  const [spotToDisplay, setSpotToDisplay] = useState(null);
+  // Display modal: 1st version
+  // const [isSpotModalVisible, setIsSpotModalVisible] = useState(false);
+  // const [spotToDisplay, setSpotToDisplay] = useState(null);
+
+  // Spot modal: states & functions
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,17 +77,9 @@ const VisitPage = ({ url }) => {
         {spotsData &&
           spotsData.map((spot, index) => {
             return (
-              <Card
-                className="w-80"
-                component="div"
-                key={index}
-                onClick={() => {
-                  setIsSpotModalVisible(!isSpotModalVisible);
-                  // console.log("visit page, clic on spot div, spot: ", spot);
-                  setSpotToDisplay(spot);
-                }}
-              >
+              <Card className="w-80" component="div" key={index}>
                 <CardContent>
+                  <Button onClick={handleOpen}>Open</Button>
                   <Typography component="div">{spot.title}</Typography>
                 </CardContent>
 
@@ -81,12 +90,26 @@ const VisitPage = ({ url }) => {
                     alt={spot.title}
                   />
                 )}
-                {isSpotModalVisible && (
+                {/* Click => display Spot Modal: 4th version */}
+                <SpotDisplayModal
+                  spot={spot}
+                  open={open}
+                  handleClose={handleClose}
+                />
+
+                {/* Click => display Modal: 1st version */}
+                {/* onClick={() => {
+                    setIsSpotModalVisible(!isSpotModalVisible);
+                    // console.log("visit page, clic on spot div, spot: ", spot);
+                    setSpotToDisplay(spot);
+                  }} */}
+                {/* Click => display Modal: 1st version */}
+                {/* {isSpotModalVisible && (
                   <OneSpotModal
                     spot={spotToDisplay}
                     setIsSpotModalVisible={setIsSpotModalVisible}
                   />
-                )}
+                )} */}
               </Card>
             );
           })}

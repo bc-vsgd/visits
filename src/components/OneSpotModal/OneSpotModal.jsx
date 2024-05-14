@@ -1,3 +1,5 @@
+// UNUSED (REPLACED BY SPOT-DISPLAY-MODAL)
+
 import { useState, useEffect } from "react";
 
 const OneSpotModal = ({ spot, setIsSpotModalVisible }) => {
@@ -55,6 +57,7 @@ const OneSpotModal = ({ spot, setIsSpotModalVisible }) => {
         >
           X
         </button>
+        {/*  */}
         <div>
           <p>{spot.title}</p>
           {picsArray.length > 1 && (
@@ -86,6 +89,7 @@ const OneSpotModal = ({ spot, setIsSpotModalVisible }) => {
             </a>
           </p> */}
         </div>
+        {/*  */}
       </div>
     </div>
   );
