@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+// MUI components
+import { Box } from "@mui/material";
 
 const Signup = ({ url, setUserToken }) => {
   const navigate = useNavigate();
@@ -49,9 +51,10 @@ const Signup = ({ url, setUserToken }) => {
       console.log("Sign up page, error: ", error);
     }
   };
+
   return (
-    <main>
-      <div>
+    <Box component="main" className="font-roboto">
+      <Box component="div">
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -100,8 +103,8 @@ const Signup = ({ url, setUserToken }) => {
         ) : (
           <Link to="/author/login">Already have an account ?</Link>
         )}
-      </div>
-    </main>
+      </Box>
+    </Box>
   );
 };
 

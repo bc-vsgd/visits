@@ -3,7 +3,9 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 // Components
-import Loader from "../../components/Loader/Loader";
+import Loader from "../components/Loader";
+// MUI components
+import { CssBaseline, Typography, Box } from "@mui/material";
 
 const HomePage = ({ url, userToken }) => {
   // 1st useEffect (data = user)
@@ -79,24 +81,25 @@ const HomePage = ({ url, userToken }) => {
   return isLoading ? (
     <Loader />
   ) : (
-    <main>
-      <h1>Home Page</h1>
+    <Box component="main" className="font-roboto">
+      <CssBaseline />
+      <Typography variant="h3">Home Page</Typography>
 
-      <div>
+      <Box component="div">
         {/* No visit */}
         {data.foundVisits.length === 0 ? (
-          <div>NO VISIT YET</div>
+          <Typography variant="h5">NO VISIT YET</Typography>
         ) : // Visits & user logged
         userId ? (
-          <div>
+          <Box component="div">
             {/* User's visits */}
             {data.authorVisits.length > 0 && (
-              <div>
-                <h2>MY VISITS</h2>
-                <div>
+              <Box component="div">
+                <Typography variant="h5">MY VISITS</Typography>
+                <Box component="div">
                   {data.authorVisits.map((visit, index) => {
                     return (
-                      <div key={index}>
+                      <Box component="div" key={index}>
                         <Link
                           to={`/visit/${visit._id}`}
                           //
@@ -105,50 +108,50 @@ const HomePage = ({ url, userToken }) => {
                         >
                           {visit.title} - {visit.author.username}
                         </Link>
-                      </div>
+                      </Box>
                     );
                   })}
-                </div>
-              </div>
+                </Box>
+              </Box>
             )}
             {/* User logged: other visits */}
-            <h2>VISITS</h2>
-            <div>
+            <Typography variant="h5">VISITS</Typography>
+            <Box component="div">
               {data.otherVisits.map((visit, index) => {
                 return (
-                  <div key={index}>
+                  <Box component="div" key={index}>
                     <Link to={`/visit/${visit._id}`}>
                       {visit.title} - {visit.author.username}
                     </Link>
-                  </div>
+                  </Box>
                 );
               })}
-            </div>
-          </div>
+            </Box>
+          </Box>
         ) : (
           //
           // User logged out: all visits
-          <div>
-            <h2>VISITS</h2>
-            <div>
+          <Box component="div">
+            <Typography variant="h5">VISITS</Typography>
+            <Box component="div">
               {data.foundVisits.map((visit, index) => {
                 return (
-                  <div key={index}>
+                  <Box component="div" key={index}>
                     <Link to={`/visit/${visit._id}`}>
                       {visit.title} - {visit.author.username}
                     </Link>
-                  </div>
+                  </Box>
                 );
               })}
-            </div>
-          </div>
+            </Box>
+          </Box>
         )}
         {/* Link to create a visit page */}
         <Link to="/visit/form">
-          <p>Create a new visit</p>
+          <Typography>Create a new visit</Typography>
         </Link>
-      </div>
-    </main>
+      </Box>
+    </Box>
   );
 };
 

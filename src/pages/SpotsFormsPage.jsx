@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 // Components
-import Loader from "../../components/Loader/Loader";
-import OneSpotForm from "../../components/OneSpotForm/OneSpotForm";
+import Loader from "../components/Loader";
+import OneSpotForm from "../components/OneSpotForm";
+// MUI components
+import { Box, Typography } from "@mui/material";
 
 const SpotsFormsPage = ({ url }) => {
   // id: visit id
@@ -29,24 +31,29 @@ const SpotsFormsPage = ({ url }) => {
     };
     fetchData();
   }, [dataLength]);
+
   return isLoading ? (
     <Loader />
   ) : (
-    <div>
+    <Box component="div" className="font-roboto">
       {/* Display visit title */}
-      <div>
-        <p>{title}</p>
-        <p>{city}</p>
-        <p>{details}</p>
-      </div>
+      <Box component="div">
+        <Typography>{title}</Typography>
+        <Typography>{city}</Typography>
+        <Typography>{details}</Typography>
+      </Box>
       {/* Display existing spots */}
-      <div>
+      <Box component="div">
         {data.map((spot, index) => {
-          return <div key={index}>{spot.title}</div>;
+          return (
+            <Box component="div" key={index}>
+              {spot.title}
+            </Box>
+          );
         })}
-      </div>
+      </Box>
       {/* New spot form */}
-      <div>
+      <Box component="div">
         <OneSpotForm
           url={url}
           id={id}
@@ -54,8 +61,8 @@ const SpotsFormsPage = ({ url }) => {
           dataLength={dataLength}
           setDataLength={setDataLength}
         />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

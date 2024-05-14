@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 // Components
-import OneSpotForm from "../../components/OneSpotForm/OneSpotForm";
+import OneSpotForm from "../components/OneSpotForm";
+// MUI components
+import { Box, Typography } from "@mui/material";
 
 const VisitUpdatePage = ({ url }) => {
   const location = useLocation();
@@ -22,11 +24,11 @@ const VisitUpdatePage = ({ url }) => {
   };
 
   return (
-    <main>
-      <div>
-        <h1>Update visit</h1>
+    <Box component="main" className="font-roboto">
+      <Box component="div">
+        <Typography variant="h4">Update visit</Typography>
         {/* Title form component ? */}
-        <div>
+        <Box component="div">
           <form onSubmit={visitSubmit}>
             <input
               type="text"
@@ -56,7 +58,7 @@ const VisitUpdatePage = ({ url }) => {
             {/* <button>Add a spot</button> */}
             <div>{errorMessage}</div>
           </form>
-        </div>
+        </Box>
         {/* Title form component ? */}
         {/*  */}
         {/* Spots */}
@@ -64,8 +66,8 @@ const VisitUpdatePage = ({ url }) => {
           spotsData.map((spot, index) => {
             return <OneSpotForm key={index} spot={spot} />;
           })}
-      </div>
-    </main>
+      </Box>
+    </Box>
   );
 };
 

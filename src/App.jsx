@@ -3,21 +3,21 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cookies from "js-cookie";
 
 // Pages
-import HomePage from "./pages/HomePage/HomePage";
-import SignupPage from "./pages/SignupPage/SignupPage";
-import LoginPage from "./pages/LoginPage/LoginPage";
+import HomePage from "./pages/HomePage";
+import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/LoginPage";
 // Pages: Create a visit
-import VisitTitleFormPage from "./pages/VisitTitleFormPage/VisitTitleFormPage";
-import SpotsFormsPage from "./pages/SpotsFormsPage/SpotsFormsPage";
+import VisitTitleFormPage from "./pages/VisitTitleFormPage";
+import SpotsFormsPage from "./pages/SpotsFormsPage";
 // Pages: See a visit
-import VisitPage from "./pages/VisitPage/VisitPage";
+import VisitPage from "./pages/VisitPage";
 // Update a visit
-import VisitUpdatePage from "./pages/VisitUpdatePage/VisitUpdatePage";
+import VisitUpdatePage from "./pages/VisitUpdatePage";
 // Page: Unused
-import VisitsPage from "./pages/VisitsPage/VisitsPage";
+import VisitsPage from "./pages/VisitsPage";
 // Components
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 //
 const url = "http://localhost:3000";
 // Style

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
+// MUI components
+import { Box, Typography } from "@mui/material";
 
 const VisitTitleFormPage = ({ url, userToken }) => {
   const navigate = useNavigate();
@@ -34,11 +36,11 @@ const VisitTitleFormPage = ({ url, userToken }) => {
   return !userToken ? (
     <Navigate to="/author/login" state={{ from: "/visit/form" }} />
   ) : (
-    <main>
-      <div>
-        <h1>New visit</h1>
+    <Box component="main" className="font-roboto">
+      <Box component="div">
+        <Typography variant="h4">New visit</Typography>
         {/* Title form component ? */}
-        <div>
+        <Box component="div">
           <form onSubmit={visitSubmit}>
             <input
               type="text"
@@ -68,10 +70,10 @@ const VisitTitleFormPage = ({ url, userToken }) => {
             <button>Add a spot</button>
             <div>{errorMessage}</div>
           </form>
-        </div>
+        </Box>
         {/* Title form component ? */}
-      </div>
-    </main>
+      </Box>
+    </Box>
   );
 };
 

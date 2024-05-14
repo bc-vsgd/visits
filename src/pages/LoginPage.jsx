@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+// MUI components
+import { Box } from "@mui/material";
 
 const LoginPage = ({ url, setUserToken }) => {
   const navigate = useNavigate();
@@ -9,6 +11,7 @@ const LoginPage = ({ url, setUserToken }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -36,8 +39,8 @@ const LoginPage = ({ url, setUserToken }) => {
     }
   };
   return (
-    <main>
-      <div>
+    <Box component="main" className="font-roboto">
+      <Box component="div">
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -66,8 +69,8 @@ const LoginPage = ({ url, setUserToken }) => {
         ) : (
           <Link to="/author/signup">Create an account</Link>
         )}
-      </div>
-    </main>
+      </Box>
+    </Box>
   );
 };
 

@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 // Components
-import Loader from "../../components/Loader/Loader";
-import OneSpotModal from "../../components/OneSpotModal/OneSpotModal";
+import Loader from "../components/Loader";
+import OneSpotModal from "../components/OneSpotModal/OneSpotModal";
+// MUI components
+import { Box } from "@mui/material";
 
 const VisitPage = ({ url }) => {
   const location = useLocation();
@@ -52,49 +54,55 @@ const VisitPage = ({ url }) => {
   return isVisitLoading || isSpotsLoading ? (
     <Loader />
   ) : (
-    <main className="visit-page">
-      <div>{visitData.title}</div>
-      <div>
+    <Box component="main" className="relative">
+      <Box component="div">{visitData.title}</Box>
+      <Box component="div">
         {spotsData &&
           spotsData.map((spot, index) => {
             return (
-              <div key={index}>
-                <div
+              <Box component="div" key={index}>
+                <Box
+                  component="div"
                   onClick={() => {
                     setIsSpotModalVisible(!isSpotModalVisible);
                     // console.log("visit page, clic on spot div, spot: ", spot);
                     setSpotToDisplay(spot);
                   }}
                 >
-                  <div>{spot.title}</div>
+                  <Box component="div">{spot.title}</Box>
                   {spot.spot_image && (
-                    <img src={spot.spot_image.secure_url} alt={spot.title} />
+                    // <img src={spot.spot_image.secure_url} alt={spot.title} />
+                    <img
+                      className="w-52"
+                      src={spot.spot_image.secure_url}
+                      alt={spot.title}
+                    />
                   )}
-                </div>
+                </Box>
                 {isSpotModalVisible && (
                   <OneSpotModal
                     spot={spotToDisplay}
                     setIsSpotModalVisible={setIsSpotModalVisible}
                   />
                 )}
-              </div>
+              </Box>
             );
           })}
-      </div>
+      </Box>
       {location.state && location.state.userToken === userToken && (
-        <div>
+        <Box component="div">
           <Link
             to={`/visit/${id}/update`}
             state={{ visitData: visitData, spotsData: spotsData }}
           >
             Update this visit
           </Link>
-        </div>
+        </Box>
       )}
-      <div>
+      <Box component="div">
         <Link to="/visit/form">Create a visit</Link>
-      </div>
-    </main>
+      </Box>
+    </Box>
   );
 };
 

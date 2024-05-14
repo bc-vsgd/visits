@@ -37,7 +37,7 @@ const OneSpotModal = ({ spot, setIsSpotModalVisible }) => {
 
   return (
     <div
-      className="spot-modal-parent flex-row"
+      className="spot-modal-parent flex"
       onClick={() => {
         setIsSpotModalVisible(false);
       }}

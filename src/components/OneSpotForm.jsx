@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+// MUI components
+import { Box, Typography, Button } from "@mui/material";
 
 const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
   // console.log("one spot form, dataLength: ", dataLength);
@@ -75,11 +77,13 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={spotSubmit} className="flex-col one-spot-form">
+    <Box component="div">
+      {/* <form onSubmit={spotSubmit} className="flex-col one-spot-form"> */}
+      <form onSubmit={spotSubmit} className="flex-col ">
         {/* Pictures */}
         <div>
           <input
+            className="h-8"
             type="file"
             multiple
             onChange={(event) => {
@@ -102,15 +106,17 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
           />
           {/* Display pictures */}
           {Object.keys(files).length !== 0 && (
-            <div className="flex-row">
+            <div className="flex">
               {Object.keys(files).map((fileKey, index) => {
                 return (
                   <div key={index}>
                     <img
+                      className="w-80"
                       src={URL.createObjectURL(files[fileKey])}
                       alt="Picture"
                     />
                     <button
+                      className="h-8 w-24"
                       type="button"
                       onClick={() => {
                         deleteFile(fileKey);
@@ -125,9 +131,10 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
           )}
         </div>
 
-        <div className="flex-row">
+        <div className="flex">
           {/* Title */}
           <input
+            className="h-8"
             type="text"
             placeholder="Title"
             value={title}
@@ -138,6 +145,7 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
           />
           {/* Description */}
           <input
+            className="h-8"
             type="text"
             placeholder="Description"
             value={description}
@@ -150,8 +158,9 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
             {categories.map((category, index) => {
               return (
                 <div key={index}>
-                  <div className="flex-row">
+                  <div className="flex">
                     <input
+                      className="h-8"
                       type="text"
                       placeholder={`Categories: ${index}`}
                       value={categories[index]}
@@ -162,6 +171,7 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
                       }}
                     />
                     <button
+                      className="h-8 w-24"
                       type="button"
                       onClick={() => {
                         const arr = [...categories];
@@ -178,6 +188,7 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
           </div>
           {/* Link */}
           <input
+            className="h-8"
             type="text"
             placeholder="Link"
             value={link}
@@ -187,20 +198,21 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
           />
         </div>
         {/* Button: add the spot */}
-        <button>Add this spot</button>
+        <button className="h-8 w-24">Add this spot</button>
         <div>{errorMessage}</div>
       </form>
       {/* Button: register the visit */}
       {dataLength > 0 && (
-        <button
+        <Button
+          className="h-8 w-24"
           onClick={() => {
             navigate(`/visit/${id}`);
           }}
         >
           Close this visit
-        </button>
+        </Button>
       )}
-    </div>
+    </Box>
   );
 };
 
