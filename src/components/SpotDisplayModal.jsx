@@ -1,3 +1,8 @@
+// Spot modal: displays pictures (etc...) of a spot
+
+// React
+import { useState, useEffect } from "react";
+// MUI components
 import {
   Modal,
   Box,
@@ -6,10 +11,8 @@ import {
   Card,
   CardContent,
   CardMedia,
-  CardActions,
 } from "@mui/material";
-import { useState, useEffect } from "react";
-
+// Style
 const modalBoxStyle = {
   position: "absolute",
   top: "10%",
@@ -17,9 +20,12 @@ const modalBoxStyle = {
 };
 
 const SpotDisplayModal = ({ spot, open, handleClose }) => {
-  //   console.log("spot display modal, spot: ", spot);
+  // States
+  const [imgIndex, setImgIndex] = useState(0);
+  const [imgToDisplay, setImgToDisplay] = useState("");
+  // console.log("spot display modal, spot: ", spot);
   // Get all pictures in a single array
-  const picsArray = [];
+  let picsArray = [];
   picsArray.push(spot.spot_image.secure_url);
   if (spot.spot_pictures) {
     for (let i = 0; i < spot.spot_pictures.length; i++) {
@@ -27,12 +33,12 @@ const SpotDisplayModal = ({ spot, open, handleClose }) => {
     }
   }
 
-  // States
-  const [imgIndex, setImgIndex] = useState(0);
-  const [imgToDisplay, setImgToDisplay] = useState("");
-
   useEffect(() => {
-    setImgToDisplay(picsArray[imgIndex]);
+    const displayImg = () => {
+      setImgToDisplay(picsArray[imgIndex]);
+      // console.log("use effect, picsArray[ind]: ", picsArray[imgIndex]);
+    };
+    displayImg();
   }, [imgIndex]);
 
   // Carousel buttons actions
@@ -53,7 +59,12 @@ const SpotDisplayModal = ({ spot, open, handleClose }) => {
   };
 
   return (
-    <Modal open={open} onClose={handleClose}>
+    <Modal
+      open={open}
+      onClose={() => {
+        handleClose();
+      }}
+    >
       <Card
         sx={{
           ...modalBoxStyle,
@@ -63,7 +74,13 @@ const SpotDisplayModal = ({ spot, open, handleClose }) => {
         }}
       >
         <CardContent>
-          <Button onClick={handleClose}>X</Button>
+          <Button
+            onClick={() => {
+              handleClose();
+            }}
+          >
+            X
+          </Button>
           <Box component="div">
             <Typography>{spot.title}</Typography>
             {picsArray.length > 1 && (
