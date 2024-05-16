@@ -65,10 +65,22 @@ const VisitPage = ({ url }) => {
         )}
       </Box>
       <Box component="div">
-        {spotsData &&
-          spotsData.map((spot, index) => {
-            return <SpotDisplayCard key={index} spot={spot} />;
-          })}
+        {/* If user is the author => can update the visit*/}
+        {spotsData && location.state && location.state.userToken === userToken
+          ? spotsData.map((spot, index) => {
+              return (
+                <SpotDisplayCard
+                  key={index}
+                  spot={spot}
+                  userToken={userToken}
+                />
+              );
+            })
+          : // If user can only read the visit
+            spotsData &&
+            spotsData.map((spot, index) => {
+              return <SpotDisplayCard key={index} spot={spot} />;
+            })}
       </Box>
       <Box component="div">
         <Link to="/visit/form">Create a visit</Link>

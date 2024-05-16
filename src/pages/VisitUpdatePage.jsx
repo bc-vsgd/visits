@@ -1,3 +1,5 @@
+// UNUSED: replaced by VisitTitleUpdatePage
+
 import { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 // Components
@@ -56,12 +58,9 @@ const VisitUpdatePage = ({ url }) => {
                 setDetails(event.target.value);
               }}
             />
-            {/* <button>Add a spot</button> */}
             <div>{errorMessage}</div>
           </Box>
         </Box>
-        {/* Title form component ? */}
-        {/*  */}
         {/* Spots */}
         {spotsData &&
           spotsData.map((spot, index) => {
