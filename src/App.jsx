@@ -12,7 +12,8 @@ import SpotsFormsPage from "./pages/SpotsFormsPage";
 // Pages: See a visit
 import VisitPage from "./pages/VisitPage";
 // Update a visit
-import VisitUpdatePage from "./pages/VisitUpdatePage";
+// import VisitUpdatePage from "./pages/VisitUpdatePage";
+import VisitTitleUpdatePage from "./pages/VisitTitleUpdatePage";
 // Page: Unused
 import VisitsPage from "./pages/VisitsPage";
 // Components
@@ -83,10 +84,10 @@ function App() {
           />
           {/* Display a visit */}
           <Route path="/visit/:id" element={<VisitPage url={url} />} />
-          {/* Update a visit */}
+          {/* Update a visit title */}
           <Route
             path="/visit/:id/update"
-            element={<VisitUpdatePage url={url} />}
+            element={<VisitTitleUpdatePage url={url} userToken={userToken} />}
           />
         </Routes>
         <Footer />

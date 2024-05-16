@@ -163,7 +163,7 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
             }}
           />
           {/* Categories */}
-          <Box component="div" className="flex-col">
+          {/* <Box component="div" className="flex-col">
             {categories.map((category, index) => {
               return (
                 <Box component="div" key={index}>
@@ -193,7 +193,7 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
                 </Box>
               );
             })}
-          </Box>
+          </Box> */}
           {/* Link */}
           <TextField
             variant="standard"

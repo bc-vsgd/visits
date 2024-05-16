@@ -5,7 +5,7 @@ import { Box, Button } from "@mui/material";
 const Header = ({ userToken, setUserToken }) => {
   const navigate = useNavigate();
   return (
-    <Box component="header" className="flex">
+    <Box component="header" className="flex font-roboto">
       <Box
         component="div"
         className="flex justify-between border-2 border-solid border-blue-500"
@@ -21,7 +21,7 @@ const Header = ({ userToken, setUserToken }) => {
         {!userToken ? (
           <Box
             component="div"
-            className="border-2 border-solid border-black w-28 h-10"
+            className="flex justify-between border-2 border-solid border-black w-36 h-10"
           >
             <Box component="div">
               <Link className="header-link" to="/author/signup">

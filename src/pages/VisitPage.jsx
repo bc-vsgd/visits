@@ -9,7 +9,7 @@ import axios from "axios";
 import Loader from "../components/Loader";
 import SpotDisplayCard from "../components/SpotDisplayCard";
 // MUI components
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 const VisitPage = ({ url }) => {
   const location = useLocation();
@@ -55,24 +55,21 @@ const VisitPage = ({ url }) => {
   return isVisitLoading || isSpotsLoading ? (
     <Loader />
   ) : (
-    <Box component="main" className="relative">
-      <Box component="div">{visitData.title}</Box>
+    <Box component="main" className="font-roboto relative">
+      <Box component="div" className="flex">
+        <Box component="div">{visitData.title}</Box>
+        {location.state && location.state.userToken === userToken && (
+          <Link to={`/visit/${id}/update`} state={{ userToken: userToken }}>
+            <Button>Update visit title</Button>
+          </Link>
+        )}
+      </Box>
       <Box component="div">
         {spotsData &&
           spotsData.map((spot, index) => {
             return <SpotDisplayCard key={index} spot={spot} />;
           })}
       </Box>
-      {location.state && location.state.userToken === userToken && (
-        <Box component="div">
-          <Link
-            to={`/visit/${id}/update`}
-            state={{ visitData: visitData, spotsData: spotsData }}
-          >
-            Update this visit
-          </Link>
-        </Box>
-      )}
       <Box component="div">
         <Link to="/visit/form">Create a visit</Link>
       </Box>
