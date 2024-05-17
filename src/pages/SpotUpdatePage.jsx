@@ -25,6 +25,8 @@ const SpotUpdatePage = ({ url }) => {
   // Image: main picture (= object)
   const [image, setImage] = useState(null);
   //
+  console.log("image: ", image);
+  console.log("pictures: ", pictures);
   const [title, setTitle] = useState("");
   const [categories, setCategories] = useState([""]);
   const [description, setDescription] = useState("");
@@ -70,6 +72,8 @@ const SpotUpdatePage = ({ url }) => {
       title
     ) {
       try {
+        // console.log("submit, image: ", image);
+        // console.log("submit, pictures: ", pictures);
         const formData = new FormData();
         formData.append("title", title);
         formData.append("categories", JSON.stringify(categories));
@@ -88,10 +92,12 @@ const SpotUpdatePage = ({ url }) => {
             picsArray.push(pictures[i]);
           }
         }
+        // console.log("submit, pics array: ", picsArray);
         formData.append("picsArray", JSON.stringify(picsArray));
 
         // Selected pictures
         if (Object.keys(files).length > 0) {
+          // console.log("spot update, submit: selected files");
           for (const key in files) {
             if (Object.hasOwnProperty.call(files, key)) {
               formData.append("pictures", files[key]);
