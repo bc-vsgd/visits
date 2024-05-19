@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 // Components
 import Loader from "../components/Loader";
@@ -15,6 +15,15 @@ import {
 } from "@mui/material";
 
 const SpotUpdatePage = ({ url }) => {
+  const location = useLocation();
+  if (location.state) {
+    // console.log("spot update page: state: ", location.state);
+    console.log(
+      "spot update page: spots data length: ",
+      location.state.spotsDataLength
+    );
+  }
+  const navigate = useNavigate();
   const { id } = useParams();
   // States
   const [isLoading, setIsLoading] = useState(true);
@@ -25,8 +34,8 @@ const SpotUpdatePage = ({ url }) => {
   // Image: main picture (= object)
   const [image, setImage] = useState(null);
   //
-  console.log("image: ", image);
-  console.log("pictures: ", pictures);
+  // console.log("image: ", image);
+  // console.log("pictures: ", pictures);
   const [title, setTitle] = useState("");
   const [categories, setCategories] = useState([""]);
   const [description, setDescription] = useState("");
@@ -66,11 +75,13 @@ const SpotUpdatePage = ({ url }) => {
   // Form submit
   const spotFormSubmit = async (event) => {
     event.preventDefault();
+    console.log("ok 1");
     // Conditions: pictures + title
     if (
       (image || pictures.length > 0 || Object.keys(files).length > 0) &&
       title
     ) {
+      console.log("ok 2");
       try {
         // console.log("submit, image: ", image);
         // console.log("submit, pictures: ", pictures);
@@ -104,22 +115,29 @@ const SpotUpdatePage = ({ url }) => {
             }
           }
         }
-
+        console.log("ok 3, id: ", id);
         const { data } = await axios.put(
           `${url}/visit/spot/${id}/update`,
           formData,
-          { headers: { "Content-Type": "multipart/form-data" } }
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
         );
         console.log("Spot update, data: ", data);
+        if (location.state) {
+          navigate(`${location.state.from}`, {
+            state: { userToken: location.state.userToken },
+          });
+        }
       } catch (error) {
-        console.log("One spot form comp, error: ", error);
+        console.log("One spot update, error: ", error);
       }
       // Reset form
-      setFiles({});
-      setTitle("");
-      setCategories([]);
-      setDescription("");
-      setLink("");
+      // setFiles({});
+      // setTitle("");
+      // setCategories([]);
+      // setDescription("");
+      // setLink("");
     } else {
       if (Object.keys(files).length === 0) {
         setErrorMessage("This spot must have pictures");
@@ -321,6 +339,20 @@ const SpotUpdatePage = ({ url }) => {
           {/* Button: update the spot */}
           <Button className="h-8 w-24" onClick={spotFormSubmit}>
             Update this spot
+          </Button>
+          {/* Button: delete the spot */}
+          <Button
+            className="h-8 w-24"
+            onClick={() => {
+              const { data } = axios.delete(`${url}/visit/spot/${id}/delete`);
+              if (location.state) {
+                navigate(location.state.from, {
+                  state: { userToken: location.state.userToken },
+                });
+              }
+            }}
+          >
+            Delete this spot
           </Button>
         </Box>
         <Box component="div">{errorMessage}</Box>

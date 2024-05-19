@@ -2,7 +2,7 @@
 
 // React
 import { useState, useEffect } from "react";
-import { useParams, useLocation, Link } from "react-router-dom";
+import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 // Packages
 import axios from "axios";
 // Components
@@ -12,6 +12,7 @@ import SpotDisplayCard from "../components/SpotDisplayCard";
 import { Box, Button } from "@mui/material";
 
 const VisitPage = ({ url }) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
   const [userToken, setUserToken] = useState("");
@@ -59,9 +60,22 @@ const VisitPage = ({ url }) => {
       <Box component="div" className="flex">
         <Box component="div">{visitData.title}</Box>
         {location.state && location.state.userToken === userToken && (
-          <Link to={`/visit/${id}/update`} state={{ userToken: userToken }}>
-            <Button>Update visit title</Button>
-          </Link>
+          <>
+            <Link to={`/visit/${id}/update`} state={{ userToken: userToken }}>
+              <Button>Update visit title</Button>
+            </Link>
+            <Button
+              onClick={() => {
+                const { data } = axios.delete(
+                  `${url}/visits/visit/${id}/delete`
+                );
+                console.log("visit page, delete: ", data);
+                navigate("/");
+              }}
+            >
+              Delete this visit
+            </Button>
+          </>
         )}
       </Box>
       <Box component="div">
@@ -73,6 +87,8 @@ const VisitPage = ({ url }) => {
                   key={index}
                   spot={spot}
                   userToken={userToken}
+                  visitId={id}
+                  spotsDataLength={spotsData.length}
                 />
               );
             })

@@ -1,7 +1,7 @@
 // Spot card: displays card + opens spot modal + button to update the spot
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 // MUI components
 import {
   Card,
@@ -13,9 +13,16 @@ import {
 // Components
 import SpotDisplayModal from "./SpotDisplayModal";
 
-const SpotDisplayCard = ({ spot, userToken }) => {
+const SpotDisplayCard = ({ spot, userToken, visitId, spotsDataLength }) => {
   // console.log("spot card, userToken: ", userToken);
+  // console.log("spot display card, visit id: ", useParams());
+  // console.log("spot display card, visit id: ", visitId);
   const navigate = useNavigate();
+  const location = useLocation();
+  // Spot display card <=> Spot update page: back to authenticated visit (=> update options)
+  if (!userToken && location.state) {
+    userToken = location.state.userToken;
+  }
   // States
   const [open, setOpen] = useState(false);
   const [spotToDisplay, setSpotToDisplay] = useState(null);
@@ -51,7 +58,13 @@ const SpotDisplayCard = ({ spot, userToken }) => {
       {userToken && (
         <Button
           onClick={() => {
-            navigate(`/visit/spot/${spot._id}/update`);
+            navigate(`/visit/spot/${spot._id}/update`, {
+              state: {
+                from: `/visit/${visitId}`,
+                userToken: userToken,
+                spotsDataLength: spotsDataLength,
+              },
+            });
           }}
         >
           Update this spot

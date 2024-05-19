@@ -140,30 +140,30 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
             </Box>
           )}
         </Box>
-
-        <Box component="div" className="flex">
-          {/* Title */}
-          <TextField
-            required
-            className="h-8"
-            variant="standard"
-            label="Title"
-            onChange={(event) => {
-              setTitle(event.target.value);
-              setErrorMessage("");
-            }}
-          />
-          {/* Description */}
-          <TextField
-            className="h-8"
-            variant="standard"
-            label="Description"
-            onChange={(event) => {
-              setDescription(event.target.value);
-            }}
-          />
-          {/* Categories */}
-          {/* <Box component="div" className="flex-col">
+        <Box className="flex">
+          <Box component="div" className="flex">
+            {/* Title */}
+            <TextField
+              required
+              className="h-8"
+              variant="standard"
+              label="Title"
+              onChange={(event) => {
+                setTitle(event.target.value);
+                setErrorMessage("");
+              }}
+            />
+            {/* Description */}
+            <TextField
+              className="h-8"
+              variant="standard"
+              label="Description"
+              onChange={(event) => {
+                setDescription(event.target.value);
+              }}
+            />
+            {/* Categories */}
+            {/* <Box component="div" className="flex-col">
             {categories.map((category, index) => {
               return (
                 <Box component="div" key={index}>
@@ -194,33 +194,35 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
               );
             })}
           </Box> */}
-          {/* Link */}
-          <TextField
-            variant="standard"
-            className="h-8"
-            label="Link"
-            onChange={(event) => {
-              setLink(event.target.value);
-            }}
-          />
+            {/* Link */}
+            <TextField
+              variant="standard"
+              className="h-8"
+              label="Link"
+              onChange={(event) => {
+                setLink(event.target.value);
+              }}
+            />
+          </Box>
+          {/* Button: add the spot */}
+          <Button className="h-8 w-24" onClick={spotFormSubmit}>
+            Add this spot
+          </Button>
+          <Box component="div">{errorMessage}</Box>
+
+          {/* Button: register the visit */}
+          {dataLength > 0 && (
+            <Button
+              className="h-8 w-24"
+              onClick={() => {
+                navigate(`/visit/${id}`);
+              }}
+            >
+              Close this visit
+            </Button>
+          )}
         </Box>
-        {/* Button: add the spot */}
-        <Button className="h-8 w-24" onClick={spotFormSubmit}>
-          Add this spot
-        </Button>
-        <Box component="div">{errorMessage}</Box>
       </Box>
-      {/* Button: register the visit */}
-      {dataLength > 0 && (
-        <Button
-          className="h-8 w-24"
-          onClick={() => {
-            navigate(`/visit/${id}`);
-          }}
-        >
-          Close this visit
-        </Button>
-      )}
     </Box>
   );
 };
