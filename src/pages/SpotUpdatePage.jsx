@@ -16,13 +16,13 @@ import {
 
 const SpotUpdatePage = ({ url }) => {
   const location = useLocation();
-  if (location.state) {
-    // console.log("spot update page: state: ", location.state);
-    console.log(
-      "spot update page: spots data length: ",
-      location.state.spotsDataLength
-    );
-  }
+  // if (location.state) {
+  //   // console.log("spot update page: state: ", location.state);
+  //   console.log(
+  //     "spot update page: spots data length: ",
+  //     location.state.spotsDataLength
+  //   );
+  // }
   const navigate = useNavigate();
   const { id } = useParams();
   // States
@@ -75,13 +75,13 @@ const SpotUpdatePage = ({ url }) => {
   // Form submit
   const spotFormSubmit = async (event) => {
     event.preventDefault();
-    console.log("ok 1");
+    // console.log("ok 1");
     // Conditions: pictures + title
     if (
       (image || pictures.length > 0 || Object.keys(files).length > 0) &&
       title
     ) {
-      console.log("ok 2");
+      // console.log("ok 2");
       try {
         // console.log("submit, image: ", image);
         // console.log("submit, pictures: ", pictures);
@@ -115,7 +115,7 @@ const SpotUpdatePage = ({ url }) => {
             }
           }
         }
-        console.log("ok 3, id: ", id);
+        // console.log("ok 3, id: ", id);
         const { data } = await axios.put(
           `${url}/visit/spot/${id}/update`,
           formData,
@@ -132,12 +132,6 @@ const SpotUpdatePage = ({ url }) => {
       } catch (error) {
         console.log("One spot update, error: ", error);
       }
-      // Reset form
-      // setFiles({});
-      // setTitle("");
-      // setCategories([]);
-      // setDescription("");
-      // setLink("");
     } else {
       if (Object.keys(files).length === 0) {
         setErrorMessage("This spot must have pictures");
@@ -157,6 +151,7 @@ const SpotUpdatePage = ({ url }) => {
     }
     setFiles(filesCopy);
   };
+
   if (isLoading) {
     return <Loader />;
   }
@@ -228,10 +223,14 @@ const SpotUpdatePage = ({ url }) => {
                         <Button
                           onClick={() => {
                             setPictures((prev) => {
-                              if (prev.length === 1) {
+                              const newArr = [...prev];
+                              if (newArr.length === 1) {
                                 return [];
+                              } else {
+                                newArr.splice(index, 1);
+
+                                return newArr;
                               }
-                              return prev.splice(index, 1);
                             });
                           }}
                         >

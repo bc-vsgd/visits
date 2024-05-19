@@ -1,4 +1,7 @@
-// Visit page: displays spots cards
+// Visit page: displays visit title and spots cards
+// If author authenticated: possibility to update (title, spots), add (spots) and delete (spots, visit)
+// 1st useEffect: gets visit data
+// 2nd useEffect: gets spots data
 
 // React
 import { useState, useEffect } from "react";
@@ -16,6 +19,10 @@ const VisitPage = ({ url }) => {
   const location = useLocation();
   const { id } = useParams();
   const [userToken, setUserToken] = useState("");
+  // console.log("Visit page, userToken (state): ", userToken);
+  // if (location.state) {
+  //   console.log("Visit page, userToken (location): ", location.state.userToken);
+  // }
   const [visitData, setVisitData] = useState(null);
   const [spotsData, setSpotsData] = useState(null);
   const [isVisitLoading, setIsVisitLoading] = useState(true);
@@ -46,7 +53,6 @@ const VisitPage = ({ url }) => {
         setSpotsData(data.data);
       } catch (error) {
         console.log("visit page, spots error: ", error);
-        // alert("No spot for this visit ...");
       }
       setIsSpotLoading(false);
     };
@@ -59,6 +65,7 @@ const VisitPage = ({ url }) => {
     <Box component="main" className="font-roboto relative">
       <Box component="div" className="flex">
         <Box component="div">{visitData.title}</Box>
+        {/* Author authenticated => possibility to update */}
         {location.state && location.state.userToken === userToken && (
           <>
             <Link to={`/visit/${id}/update`} state={{ userToken: userToken }}>
@@ -69,7 +76,6 @@ const VisitPage = ({ url }) => {
                 const { data } = axios.delete(
                   `${url}/visits/visit/${id}/delete`
                 );
-                console.log("visit page, delete: ", data);
                 navigate("/");
               }}
             >
@@ -79,7 +85,7 @@ const VisitPage = ({ url }) => {
         )}
       </Box>
       <Box component="div">
-        {/* If user is the author => can update the visit*/}
+        {/* If user is the author => can update the spots */}
         {spotsData && location.state && location.state.userToken === userToken
           ? spotsData.map((spot, index) => {
               return (
@@ -98,6 +104,23 @@ const VisitPage = ({ url }) => {
               return <SpotDisplayCard key={index} spot={spot} />;
             })}
       </Box>
+      {/* Author authenticated => possibility to add a spot */}
+      {location.state && location.state.userToken === userToken && (
+        <Button
+          onClick={() => {
+            navigate(`/visit/form/${id}/spots`, {
+              state: {
+                title: visitData.title,
+                city: visitData.city,
+                details: visitData.city_details,
+                userToken: userToken,
+              },
+            });
+          }}
+        >
+          Add a spot
+        </Button>
+      )}
       <Box component="div">
         <Link to="/visit/form">Create a visit</Link>
       </Box>

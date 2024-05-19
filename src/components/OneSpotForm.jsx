@@ -12,8 +12,16 @@ import {
   Input,
 } from "@mui/material";
 
-const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
+const OneSpotForm = ({
+  url,
+  id,
+  setIsLoading,
+  dataLength,
+  setDataLength,
+  userToken,
+}) => {
   // console.log("one spot form, dataLength: ", dataLength);
+  // console.log("one spot form, userToken (props): ", userToken);
   const navigate = useNavigate();
   // state id: visit id
   const [files, setFiles] = useState({});
@@ -22,7 +30,6 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  // console.log("categories: ", categories.length);
 
   // Form submit
   const spotFormSubmit = async (event) => {
@@ -215,7 +222,7 @@ const OneSpotForm = ({ url, id, setIsLoading, dataLength, setDataLength }) => {
             <Button
               className="h-8 w-24"
               onClick={() => {
-                navigate(`/visit/${id}`);
+                navigate(`/visit/${id}`, { state: { userToken: userToken } });
               }}
             >
               Close this visit

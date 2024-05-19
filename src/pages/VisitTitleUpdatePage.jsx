@@ -65,7 +65,9 @@ const VisitTitleUpdatePage = ({ url }) => {
       setErrorMessage("Title required");
     }
   };
+
   if (isLoading) return <Loader />;
+
   return !userToken ? (
     <Navigate to="/author/login" state={{ from: "/visit/form" }} />
   ) : (

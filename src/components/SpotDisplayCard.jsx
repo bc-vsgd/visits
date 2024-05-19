@@ -14,9 +14,6 @@ import {
 import SpotDisplayModal from "./SpotDisplayModal";
 
 const SpotDisplayCard = ({ spot, userToken, visitId, spotsDataLength }) => {
-  // console.log("spot card, userToken: ", userToken);
-  // console.log("spot display card, visit id: ", useParams());
-  // console.log("spot display card, visit id: ", visitId);
   const navigate = useNavigate();
   const location = useLocation();
   // Spot display card <=> Spot update page: back to authenticated visit (=> update options)
