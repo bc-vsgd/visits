@@ -8,6 +8,9 @@ import { useState, useEffect } from "react";
 import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 // Packages
 import axios from "axios";
+import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
+// Utils
+import getGeoLocation from "../utils/getGeoLocation";
 // Components
 import Loader from "../components/Loader";
 import SpotDisplayCard from "../components/SpotDisplayCard";
@@ -27,6 +30,8 @@ const VisitPage = ({ url }) => {
   const [spotsData, setSpotsData] = useState(null);
   const [isVisitLoading, setIsVisitLoading] = useState(true);
   const [isSpotsLoading, setIsSpotLoading] = useState(true);
+  //
+  const centerCoords = [48.86, 2.33];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,9 +53,12 @@ const VisitPage = ({ url }) => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(`${url}/visit/${id}/spots`);
-        // console.log("visit page, spots: ", data.data);
+        console.log("visit page, spots: ", data.data);
         //   data.data: array of spots
         setSpotsData(data.data);
+        // const { latitude, longitude } = data.data[0].coords;
+        // console.log("latitude: ", latitude);
+        // console.log("longitude: ", longitude);
       } catch (error) {
         console.log("visit page, spots error: ", error);
       }
@@ -84,6 +92,38 @@ const VisitPage = ({ url }) => {
           </>
         )}
       </Box>
+
+      <MapContainer
+        className="h-[400px] w-[500px]"
+        // center={[51.505, -0.09]}
+        center={centerCoords}
+        zoom={12}
+        scrollWheelZoom={true}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {spotsData.map((spot) => {
+          return (
+            <Marker
+              // onClick={() => {
+              //   console.log("Clic marker");
+              // }}
+              eventHandlers={{
+                click: () => {
+                  console.log("marker: click");
+                },
+              }}
+              key={spot._id}
+              position={[spot.coords.latitude, spot.coords.longitude]}
+            >
+              <Popup>{spot.title}</Popup>
+            </Marker>
+          );
+        })}
+      </MapContainer>
+
       <Box component="div">
         {/* If user is the author => can update the spots */}
         {spotsData && location.state && location.state.userToken === userToken
