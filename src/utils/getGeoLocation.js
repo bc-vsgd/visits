@@ -1,3 +1,5 @@
+// UNUSED
+
 import exifr from "exifr";
 
 const getGeoLocation = async (url) => {

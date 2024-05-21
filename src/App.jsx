@@ -12,11 +12,8 @@ import SpotsFormsPage from "./pages/SpotsFormsPage";
 // Pages: See a visit
 import VisitPage from "./pages/VisitPage";
 // Update a visit
-// import VisitUpdatePage from "./pages/VisitUpdatePage";
 import VisitTitleUpdatePage from "./pages/VisitTitleUpdatePage";
 import SpotUpdatePage from "./pages/SpotUpdatePage";
-// Page: Unused
-import VisitsPage from "./pages/VisitsPage";
 // Components
 import Header from "./components/Header";
 import Footer from "./components/Footer";

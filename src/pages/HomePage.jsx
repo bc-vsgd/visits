@@ -15,20 +15,17 @@ const HomePage = ({ url, userToken }) => {
   // 2nd useEffect (data = visits)
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  // console.log("home page, user token: ", userToken);
 
   // Get user data
   useEffect(
     () => {
       const fetchData = async () => {
-        // console.log("home page, fetch 1");
         setIsUserLoading(true);
         try {
           if (userToken) {
             const { data } = await axios.get(`${url}/visits/author/author`, {
               headers: { authorization: userToken },
             });
-            // console.log("home page, fetch 1, user data: ", data.data[0]);
             setUserData(data.data[0]);
             setUserId(data.data[0]._id);
           } else {
@@ -54,16 +51,15 @@ const HomePage = ({ url, userToken }) => {
         setIsLoading(true);
         if (!isUserLoading) {
           try {
-            // console.log("fetch 2: try: user token: ", userToken);
             if (userToken) {
               if (userId) {
                 const { data } = await axios.get(`${url}/visits/${userId}`);
-                console.log("home page, fetch 2, data: ", data);
+                // console.log("home page, fetch 2, data: ", data);
                 setData(data);
               }
             } else {
               const { data } = await axios.get(`${url}/visits`);
-              console.log("home page, fetch 2, data: ", data);
+              // console.log("home page, fetch 2, data: ", data);
               setData(data);
             }
           } catch (error) {
@@ -102,9 +98,7 @@ const HomePage = ({ url, userToken }) => {
                       <Box component="div" key={index}>
                         <Link
                           to={`/visit/${visit._id}`}
-                          //
                           state={{ userToken: userToken }}
-                          //
                         >
                           {visit.title} - {visit.author.username}
                         </Link>

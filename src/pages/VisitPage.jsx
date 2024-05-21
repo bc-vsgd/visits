@@ -9,8 +9,6 @@ import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 // Packages
 import axios from "axios";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
-// Utils
-import getGeoLocation from "../utils/getGeoLocation";
 // Components
 import Loader from "../components/Loader";
 import SpotDisplayCard from "../components/SpotDisplayCard";
@@ -22,10 +20,6 @@ const VisitPage = ({ url }) => {
   const location = useLocation();
   const { id } = useParams();
   const [userToken, setUserToken] = useState("");
-  // console.log("Visit page, userToken (state): ", userToken);
-  // if (location.state) {
-  //   console.log("Visit page, userToken (location): ", location.state.userToken);
-  // }
   const [visitData, setVisitData] = useState(null);
   const [spotsData, setSpotsData] = useState(null);
   const [isVisitLoading, setIsVisitLoading] = useState(true);
@@ -56,9 +50,6 @@ const VisitPage = ({ url }) => {
         console.log("visit page, spots: ", data.data);
         //   data.data: array of spots
         setSpotsData(data.data);
-        // const { latitude, longitude } = data.data[0].coords;
-        // console.log("latitude: ", latitude);
-        // console.log("longitude: ", longitude);
       } catch (error) {
         console.log("visit page, spots error: ", error);
       }
@@ -95,7 +86,6 @@ const VisitPage = ({ url }) => {
 
       <MapContainer
         className="h-[400px] w-[500px]"
-        // center={[51.505, -0.09]}
         center={centerCoords}
         zoom={12}
         scrollWheelZoom={true}
@@ -107,9 +97,6 @@ const VisitPage = ({ url }) => {
         {spotsData.map((spot) => {
           return (
             <Marker
-              // onClick={() => {
-              //   console.log("Clic marker");
-              // }}
               eventHandlers={{
                 click: () => {
                   console.log("marker: click");

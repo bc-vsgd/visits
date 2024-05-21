@@ -29,10 +29,8 @@ const VisitUpdatePage = ({ url }) => {
     <Box component="main" className="font-roboto">
       <Box component="div">
         <Typography variant="h4">Update visit</Typography>
-        {/* Title form component ? */}
         <Box component="div">
           <Box component="form" onSubmit={visitSubmit}>
-            {/* <TextField variant="standard" /> */}
             <input
               type="text"
               placeholder="Visit title"

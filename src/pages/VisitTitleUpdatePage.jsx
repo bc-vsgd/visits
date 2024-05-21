@@ -1,5 +1,6 @@
 // Update visit title
 
+// React
 import { useState, useEffect } from "react";
 import {
   useNavigate,
@@ -7,15 +8,15 @@ import {
   Navigate,
   useParams,
 } from "react-router-dom";
+// Packages
 import axios from "axios";
-// components
+// Components
 import Loader from "../components/Loader";
 // MUI components
 import { Box, Typography, TextField, Button } from "@mui/material";
 
 const VisitTitleUpdatePage = ({ url }) => {
   const { id } = useParams();
-  //   console.log("title update, id: ", id);
   const navigate = useNavigate();
   const location = useLocation();
   const userToken = location.state.userToken;

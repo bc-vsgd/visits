@@ -31,7 +31,6 @@ const Signup = ({ url, setUserToken }) => {
             Cookies.set("userToken", userToken);
             setUserToken(userToken);
             // Back to home page or to Visit title (creation) page
-            // console.log("sign up page, location: ", location);
             if (location.state) {
               navigate(location.state.from);
             } else {
