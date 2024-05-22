@@ -1,3 +1,5 @@
+// UNUSED: REPLACED BY SPOT MODAL COMPONENT
+
 // Spot card: displays card + opens spot modal + button to update the spot
 
 import { useState } from "react";
@@ -23,7 +25,7 @@ const SpotDisplayCard = ({ spot, userToken, visitId, spotsDataLength }) => {
   // States
   const [open, setOpen] = useState(false);
   const [spotToDisplay, setSpotToDisplay] = useState(null);
-  // Handle functions
+  // Modal handle functions
   const handleOpen = (spot) => {
     setSpotToDisplay(spot);
     setOpen(true);

@@ -8,37 +8,19 @@ import { useState, useEffect } from "react";
 import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 // Packages
 import axios from "axios";
-import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 // Components
 import Loader from "../components/Loader";
-import SpotDisplayCard from "../components/SpotDisplayCard";
 // Modal
-import SpotDisplayModal from "../components/SpotDisplayModal";
+import SpotModal from "../components/SpotModal";
 // MUI components
-import {
-  Box,
-  Button,
-  Modal,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
-
-// const SpotModal = () => {
-//   return (
-//     <Modal open={open} onClose={handleClose}>
-//       <Card>
-//         <p>Modal</p>
-//       </Card>
-//     </Modal>
-//   );
-// };
+import { Box, Button } from "@mui/material";
 
 const VisitPage = ({ url }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
+  // States
   const [userToken, setUserToken] = useState("");
   const [visitData, setVisitData] = useState(null);
   const [spotsData, setSpotsData] = useState(null);
@@ -46,8 +28,7 @@ const VisitPage = ({ url }) => {
   const [isSpotsLoading, setIsSpotLoading] = useState(true);
   //
   const centerCoords = [48.86, 2.33];
-  // Modal
-  //  + navigate, location
+  // Modal: states & functions
   const [open, setOpen] = useState(false);
   const [spotToDisplay, setSpotToDisplay] = useState(null);
   const handleOpen = (spot) => {
@@ -57,68 +38,8 @@ const VisitPage = ({ url }) => {
   const handleClose = () => {
     setOpen(false);
   };
-  // Modal component
-  const SpotModal = ({
-    open,
-    handleClose,
-    spot,
-    userToken,
-    spotsDataLength,
-    visitId,
-  }) => {
-    // console.log("spot to display: ", spotToDisplay);
-    console.log("spot to display: ", spot);
-    return (
-      spot && (
-        <Modal open={open} onClose={handleClose}>
-          <Card className="w-80" component="div">
-            <CardContent>
-              <Button
-                onClick={() => {
-                  handleOpen(spot);
-                }}
-              >
-                Open
-              </Button>
-              <Typography component="div">{spot.title}</Typography>
-            </CardContent>
 
-            {spot.spot_image && (
-              <CardMedia
-                component="img"
-                image={spot.spot_image.secure_url}
-                alt={spot.title}
-              />
-            )}
-            {userToken && (
-              <Button
-                onClick={() => {
-                  navigate(`/visit/spot/${spot._id}/update`, {
-                    state: {
-                      from: `/visit/${visitId}`,
-                      userToken: userToken,
-                      spotsDataLength: spotsDataLength,
-                    },
-                  });
-                }}
-              >
-                Update this spot
-              </Button>
-            )}
-            {/* Click => display Spot Modal: 4th version */}
-            {spotToDisplay && (
-              <SpotDisplayModal
-                spot={spotToDisplay}
-                open={open}
-                handleClose={handleClose}
-              />
-            )}
-          </Card>
-        </Modal>
-      )
-    );
-  };
-
+  // 1st use effect: get visit data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -135,11 +56,12 @@ const VisitPage = ({ url }) => {
     fetchData();
   }, []);
 
+  // 2nd use effect: get spots data of this visit
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(`${url}/visit/${id}/spots`);
-        console.log("visit page, spots: ", data.data);
+        // console.log("visit page, spots: ", data.data);
         //   data.data: array of spots
         setSpotsData(data.data);
       } catch (error) {
@@ -197,8 +119,10 @@ const VisitPage = ({ url }) => {
               key={spot._id}
               position={[spot.coords.latitude, spot.coords.longitude]}
             >
-              <Popup>{spot.title}</Popup>
+              {/* <Popup>{spot.title}</Popup> */}
+
               {/* Modal */}
+              {/* If user is the author => can update the spots */}
               {spotsData &&
               location.state &&
               location.state.userToken === userToken ? (
@@ -211,33 +135,20 @@ const VisitPage = ({ url }) => {
                   spotsDataLength={spotsData.length}
                 />
               ) : (
-                spotsData && <SpotModal spot={spotToDisplay} />
+                // User not authenticated => can only read the visit
+                spotsData && (
+                  <SpotModal
+                    open={open}
+                    handleClose={handleClose}
+                    spot={spotToDisplay}
+                  />
+                )
               )}
             </Marker>
           );
         })}
       </MapContainer>
 
-      <Box component="div">
-        {/* If user is the author => can update the spots */}
-        {spotsData && location.state && location.state.userToken === userToken
-          ? spotsData.map((spot, index) => {
-              return (
-                <SpotDisplayCard
-                  key={index}
-                  spot={spot}
-                  userToken={userToken}
-                  visitId={id}
-                  spotsDataLength={spotsData.length}
-                />
-              );
-            })
-          : // If user can only read the visit
-            spotsData &&
-            spotsData.map((spot, index) => {
-              return <SpotDisplayCard key={index} spot={spot} />;
-            })}
-      </Box>
       {/* Author authenticated => possibility to add a spot */}
       {location.state && location.state.userToken === userToken && (
         <Button
@@ -256,7 +167,7 @@ const VisitPage = ({ url }) => {
         </Button>
       )}
 
-      {/*  */}
+      {/* Create a visit (authenticated or not) */}
       <Box component="div">
         <Link to="/visit/form">Create a visit</Link>
       </Box>

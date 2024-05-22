@@ -23,7 +23,7 @@ const SpotDisplayModal = ({ spot, open, handleClose }) => {
   // States
   const [imgIndex, setImgIndex] = useState(0);
   const [imgToDisplay, setImgToDisplay] = useState("");
-  // console.log("spot display modal, spot: ", spot);
+  console.log("spot display modal, spot: ", spot);
   // Get all pictures in a single array
   let picsArray = [];
   picsArray.push(spot.spot_image.secure_url);
