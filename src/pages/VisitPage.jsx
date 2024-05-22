@@ -12,8 +12,28 @@ import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 // Components
 import Loader from "../components/Loader";
 import SpotDisplayCard from "../components/SpotDisplayCard";
+// Modal
+import SpotDisplayModal from "../components/SpotDisplayModal";
 // MUI components
-import { Box, Button } from "@mui/material";
+import {
+  Box,
+  Button,
+  Modal,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@mui/material";
+
+// const SpotModal = () => {
+//   return (
+//     <Modal open={open} onClose={handleClose}>
+//       <Card>
+//         <p>Modal</p>
+//       </Card>
+//     </Modal>
+//   );
+// };
 
 const VisitPage = ({ url }) => {
   const navigate = useNavigate();
@@ -26,6 +46,78 @@ const VisitPage = ({ url }) => {
   const [isSpotsLoading, setIsSpotLoading] = useState(true);
   //
   const centerCoords = [48.86, 2.33];
+  // Modal
+  //  + navigate, location
+  const [open, setOpen] = useState(false);
+  const [spotToDisplay, setSpotToDisplay] = useState(null);
+  const handleOpen = (spot) => {
+    setSpotToDisplay(spot);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  // Modal component
+  const SpotModal = ({
+    open,
+    handleClose,
+    spot,
+    userToken,
+    spotsDataLength,
+    visitId,
+  }) => {
+    // console.log("spot to display: ", spotToDisplay);
+    console.log("spot to display: ", spot);
+    return (
+      spot && (
+        <Modal open={open} onClose={handleClose}>
+          <Card className="w-80" component="div">
+            <CardContent>
+              <Button
+                onClick={() => {
+                  handleOpen(spot);
+                }}
+              >
+                Open
+              </Button>
+              <Typography component="div">{spot.title}</Typography>
+            </CardContent>
+
+            {spot.spot_image && (
+              <CardMedia
+                component="img"
+                image={spot.spot_image.secure_url}
+                alt={spot.title}
+              />
+            )}
+            {userToken && (
+              <Button
+                onClick={() => {
+                  navigate(`/visit/spot/${spot._id}/update`, {
+                    state: {
+                      from: `/visit/${visitId}`,
+                      userToken: userToken,
+                      spotsDataLength: spotsDataLength,
+                    },
+                  });
+                }}
+              >
+                Update this spot
+              </Button>
+            )}
+            {/* Click => display Spot Modal: 4th version */}
+            {spotToDisplay && (
+              <SpotDisplayModal
+                spot={spotToDisplay}
+                open={open}
+                handleClose={handleClose}
+              />
+            )}
+          </Card>
+        </Modal>
+      )
+    );
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,13 +191,28 @@ const VisitPage = ({ url }) => {
             <Marker
               eventHandlers={{
                 click: () => {
-                  console.log("marker: click");
+                  handleOpen(spot);
                 },
               }}
               key={spot._id}
               position={[spot.coords.latitude, spot.coords.longitude]}
             >
               <Popup>{spot.title}</Popup>
+              {/* Modal */}
+              {spotsData &&
+              location.state &&
+              location.state.userToken === userToken ? (
+                <SpotModal
+                  open={open}
+                  handleClose={handleClose}
+                  spot={spotToDisplay}
+                  userToken={userToken}
+                  visitId={id}
+                  spotsDataLength={spotsData.length}
+                />
+              ) : (
+                spotsData && <SpotModal spot={spotToDisplay} />
+              )}
             </Marker>
           );
         })}
@@ -148,6 +255,8 @@ const VisitPage = ({ url }) => {
           Add a spot
         </Button>
       )}
+
+      {/*  */}
       <Box component="div">
         <Link to="/visit/form">Create a visit</Link>
       </Box>
