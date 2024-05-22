@@ -16,6 +16,7 @@ import {
 
 const SpotUpdatePage = ({ url }) => {
   const location = useLocation();
+  // console.log("length: ", location.state.spotsDataLength);
   const navigate = useNavigate();
   const { id } = useParams();
   // States
@@ -330,7 +331,22 @@ const SpotUpdatePage = ({ url }) => {
             Update this spot
           </Button>
           {/* Button: delete the spot */}
-          <Button
+          {location.state && location.state.spotsDataLength > 1 && (
+            <Button
+              className="h-8 w-24"
+              onClick={() => {
+                const { data } = axios.delete(`${url}/visit/spot/${id}/delete`);
+                if (location.state) {
+                  navigate(location.state.from, {
+                    state: { userToken: location.state.userToken },
+                  });
+                }
+              }}
+            >
+              Delete this spot
+            </Button>
+          )}
+          {/* <Button
             className="h-8 w-24"
             onClick={() => {
               const { data } = axios.delete(`${url}/visit/spot/${id}/delete`);
@@ -342,7 +358,7 @@ const SpotUpdatePage = ({ url }) => {
             }}
           >
             Delete this spot
-          </Button>
+          </Button> */}
         </Box>
         <Box component="div">{errorMessage}</Box>
       </Box>

@@ -5,7 +5,7 @@ import axios from "axios";
 import Loader from "../components/Loader";
 import OneSpotForm from "../components/OneSpotForm";
 // MUI components
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Card, CardMedia } from "@mui/material";
 
 const SpotsFormsPage = ({ url }) => {
   // id: visit id
@@ -20,10 +20,12 @@ const SpotsFormsPage = ({ url }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // data: existing spots of this visit
         const { data } = await axios.get(`${url}/visit/${id}/spots`);
         // console.log("Spots forms page, data: ", data.data);
         setData(data.data);
       } catch (error) {
+        // No spot yet
         console.log("Spots forms page, error: ", error);
       }
       setIsLoading(false);
@@ -42,15 +44,23 @@ const SpotsFormsPage = ({ url }) => {
         <Typography>{details}</Typography>
       </Box>
       {/* Display existing spots */}
-      <Box component="div">
-        {data.map((spot, index) => {
-          return (
-            <Box component="div" key={index}>
-              {spot.title}
-            </Box>
-          );
-        })}
-      </Box>
+      {data && (
+        <Box component="div">
+          {data.map((spot, index) => {
+            return (
+              <Card key={index} className="w-80" component="div">
+                <CardMedia
+                  component="img"
+                  image={spot.spot_image.secure_url}
+                  alt={spot.title}
+                />
+                <Box component="div">{spot.title}</Box>
+              </Card>
+            );
+          })}
+        </Box>
+      )}
+
       {/* New spot form */}
       <Box component="div">
         <OneSpotForm

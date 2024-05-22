@@ -78,7 +78,7 @@ const SpotModal = ({
               Update this spot
             </Button>
           )}
-          {/* Click => display Spot Modal: 4th version */}
+          {/* Click => Spot Display Modal: 4th version */}
           <SpotDisplayModal
             spot={spot}
             open={openModal}
