@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 // Packages
 import axios from "axios";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 // Components
 import Loader from "../components/Loader";
 // Modal
@@ -37,6 +37,21 @@ const VisitPage = ({ url }) => {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  // const UserLocation = () => {
+  //   const map = useMap();
+  //   // map.locate({ setView: true, zoom: 12 });
+  //   return null;
+  // };
+  const UserLocationMarker = () => {
+    const [position, setPosition] = useState(null);
+    const map = useMap();
+    map.locate().on("locationfound", function (event) {
+      setPosition(event.latlng);
+      // map.flyTo(event.latlng, map.getZoom());
+    });
+    return position === null ? null : <Marker position={position}></Marker>;
   };
 
   // 1st use effect: get visit data
@@ -104,6 +119,7 @@ const VisitPage = ({ url }) => {
         zoom={12}
         scrollWheelZoom={true}
       >
+        <UserLocationMarker />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
