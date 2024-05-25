@@ -4,6 +4,13 @@ import axios from "axios";
 import Cookies from "js-cookie";
 // MUI components
 import { Box, Button, TextField } from "@mui/material";
+// MUI Icons
+// import WarningIcon from "@mui/icons-material/Warning";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+// Components
+import UserFormTextField from "../components/UserFormTextField";
+import UserFormButton from "../components/UserFormButton";
+import UserFormLink from "../components/UserFormLink";
 
 const Signup = ({ url, setUserToken }) => {
   const navigate = useNavigate();
@@ -52,59 +59,72 @@ const Signup = ({ url, setUserToken }) => {
   };
 
   return (
-    <Box component="main" className="font-roboto">
+    <Box component="main" className="font-roboto mx-auto w-[1000px]">
       <Box component="div">
-        <Box component="form">
-          <TextField
-            required
-            variant="standard"
+        <Box component="form" className="flex flex-col ">
+          <UserFormTextField
+            required={true}
             label="Username"
             onChange={(event) => {
               setUsername(event.target.value);
               setErrorMessage("");
             }}
           />
-          <TextField
-            required
-            variant="standard"
+          <UserFormTextField
+            required={true}
             label="Email"
             onChange={(event) => {
               setEmail(event.target.value);
               setErrorMessage("");
             }}
           />
-          <TextField
-            required
-            variant="standard"
+          <UserFormTextField
+            required={true}
             label="Password"
             onChange={(event) => {
               setPassword(event.target.value);
               setErrorMessage("");
             }}
           />
-          <TextField
-            required
-            variant="standard"
+          <UserFormTextField
+            required={true}
             label="Confirm password"
             onChange={(event) => {
               setPassword2(event.target.value);
               setErrorMessage("");
             }}
           />
-          <Button onClick={handleFormSubmit}>Sign up</Button>
-          <Box component="div">{errorMessage}</Box>
+          {errorMessage && (
+            <Box component="div" className=" flex text-red-500 items-center">
+              <WarningAmberIcon sx={{ fontSize: "24px" }} /> {errorMessage}
+            </Box>
+          )}
+          <UserFormButton onClick={handleFormSubmit}>Sign up</UserFormButton>
         </Box>
         {/* Link to Log in page */}
-        {location.state ? (
-          <Link to="/author/login" state={{ from: location.state.from }}>
-            Already have an account ?
-          </Link>
-        ) : (
-          <Link to="/author/login">Already have an account ?</Link>
-        )}
+        <Box className="mt-3">
+          {location.state ? (
+            <UserFormLink
+              to="/author/login"
+              state={{ from: location.state.from }}
+            >
+              Already have an account ?
+            </UserFormLink>
+          ) : (
+            <UserFormLink to="/author/login">
+              Already have an account ?
+            </UserFormLink>
+          )}
+        </Box>
       </Box>
     </Box>
   );
 };
+{
+  // <Link to="/author/login">Already have an account ?</Link>
+  /* <Link to="/author/login" state={{ from: location.state.from }}>
+            Already have an account ?
+          </Link> */
+}
 
 export default Signup;

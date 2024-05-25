@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 // MUI components
 import { Box, Button } from "@mui/material";
-// Icons
+// MUI Icons
 import HomeIcon from "@mui/icons-material/Home";
 // Components
 import HeaderButton from "./HeaderButton";
@@ -10,7 +10,7 @@ import HeaderButton from "./HeaderButton";
 const Header = ({ userToken, setUserToken }) => {
   const navigate = useNavigate();
   return (
-    <Box component="header" className="flex font-roboto">
+    <Box component="header" className="flex font-roboto mb-4">
       <Box
         component="div"
         className="flex justify-between w-3/4 my-0 mx-auto border-2 border-solid border-blue-500"

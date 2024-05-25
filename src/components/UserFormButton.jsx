@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 
-const HeaderButton = ({ children, startIcon, onClick }) => {
+const UserFormButton = ({ children, startIcon, onClick }) => {
   return (
     <Button
       onClick={onClick}
@@ -14,4 +14,4 @@ const HeaderButton = ({ children, startIcon, onClick }) => {
   );
 };
 
-export default HeaderButton;
+export default UserFormButton;
