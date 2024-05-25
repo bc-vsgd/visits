@@ -4,8 +4,12 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 // Components
 import Loader from "../components/Loader";
+import HomeVisitTitle from "../components/HomeVisitTitle";
+import HomeVisitLink from "../components/HomeVisitLink";
 // MUI components
-import { CssBaseline, Typography, Box } from "@mui/material";
+import { CssBaseline, Typography, Box, Button } from "@mui/material";
+// Icons
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 const HomePage = ({ url, userToken }) => {
   // 1st useEffect (data = user)
@@ -77,31 +81,35 @@ const HomePage = ({ url, userToken }) => {
   return isLoading ? (
     <Loader />
   ) : (
-    <Box component="main" className="font-roboto">
+    <Box component="main" className="font-roboto container mx-auto w-[1000px]">
       <CssBaseline />
-      <Typography variant="h3">Home Page</Typography>
 
       <Box component="div">
         {/* No visit */}
         {data.foundVisits.length === 0 ? (
-          <Typography variant="h5">NO VISIT YET</Typography>
+          <HomeVisitTitle>
+            <span>NO VISIT YET</span>
+          </HomeVisitTitle>
         ) : // Visits & user logged
         userId ? (
           <Box component="div">
             {/* User's visits */}
             {data.authorVisits.length > 0 && (
               <Box component="div">
-                <Typography variant="h5">MY VISITS</Typography>
+                <HomeVisitTitle>
+                  <span>MY VISITS</span>
+                </HomeVisitTitle>
                 <Box component="div">
                   {data.authorVisits.map((visit, index) => {
                     return (
                       <Box component="div" key={index}>
-                        <Link
+                        <HomeVisitLink
                           to={`/visit/${visit._id}`}
                           state={{ userToken: userToken }}
                         >
-                          {visit.title} - {visit.author.username}
-                        </Link>
+                          <span>{visit.title}</span>
+                          <span>{visit.author.username}</span>
+                        </HomeVisitLink>
                       </Box>
                     );
                   })}
@@ -109,14 +117,17 @@ const HomePage = ({ url, userToken }) => {
               </Box>
             )}
             {/* User logged: other visits */}
-            <Typography variant="h5">VISITS</Typography>
+            <HomeVisitTitle>
+              <span>VISITS</span>
+            </HomeVisitTitle>
             <Box component="div">
               {data.otherVisits.map((visit, index) => {
                 return (
                   <Box component="div" key={index}>
-                    <Link to={`/visit/${visit._id}`}>
-                      {visit.title} - {visit.author.username}
-                    </Link>
+                    <HomeVisitLink to={`/visit/${visit._id}`}>
+                      <span>{visit.title}</span>
+                      <span>{visit.author.username}</span>
+                    </HomeVisitLink>
                   </Box>
                 );
               })}
@@ -126,14 +137,17 @@ const HomePage = ({ url, userToken }) => {
           //
           // User logged out: all visits
           <Box component="div">
-            <Typography variant="h5">VISITS</Typography>
+            <HomeVisitTitle>
+              <span>VISITS</span>
+            </HomeVisitTitle>
             <Box component="div">
               {data.foundVisits.map((visit, index) => {
                 return (
                   <Box component="div" key={index}>
-                    <Link to={`/visit/${visit._id}`}>
-                      {visit.title} - {visit.author.username}
-                    </Link>
+                    <HomeVisitLink to={`/visit/${visit._id}`}>
+                      <span>{visit.title}</span>
+                      <span>{visit.author.username}</span>
+                    </HomeVisitLink>
                   </Box>
                 );
               })}
@@ -141,9 +155,18 @@ const HomePage = ({ url, userToken }) => {
           </Box>
         )}
         {/* Link to create a visit page */}
-        <Link to="/visit/form">
-          <Typography>Create a new visit</Typography>
-        </Link>
+        <Box className="flex justify-end">
+          <Link to="/visit/form" className="no-underline">
+            <Button
+              variant="outlined"
+              startIcon={<AddCircleIcon />}
+              size="large"
+              className="text-lg"
+            >
+              <Typography>Create a new visit</Typography>
+            </Button>
+          </Link>
+        </Box>
       </Box>
     </Box>
   );
