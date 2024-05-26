@@ -3,7 +3,7 @@ import { TextField } from "@mui/material";
 const UserFormTextField = ({ required, label, onChange }) => {
   return (
     <TextField
-      className="w-1/2 mb-3"
+      className="mb-3 w-1/2"
       InputProps={{ style: { fontSize: "16px" } }}
       variant="standard"
       required={required}

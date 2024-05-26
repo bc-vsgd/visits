@@ -4,6 +4,12 @@ import axios from "axios";
 import Cookies from "js-cookie";
 // MUI components
 import { Box, TextField, Button } from "@mui/material";
+// Icons
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+// Components
+import UserFormButton from "../components/UserFormButton";
+import UserFormLink from "../components/UserFormLink";
+import UserFormTextField from "../components/UserFormTextField";
 
 const LoginPage = ({ url, setUserToken }) => {
   const navigate = useNavigate();
@@ -39,36 +45,45 @@ const LoginPage = ({ url, setUserToken }) => {
     }
   };
   return (
-    <Box component="main" className="font-roboto">
+    <Box component="main" className="mx-auto w-[1000px] font-roboto">
       <Box component="div">
-        <Box component="form">
-          <TextField
-            required
-            variant="standard"
+        <Box component="form" className="flex flex-col">
+          <UserFormTextField
+            required={true}
             label="Email"
             onChange={(event) => {
               setEmail(event.target.value);
             }}
           />
-          <TextField
-            required
-            variant="standard"
+          <UserFormTextField
+            required={true}
             label="Password"
             onChange={(event) => {
               setPassword(event.target.value);
             }}
           />
-          <Button onClick={handleFormSubmit}>Log in</Button>
-          <Box component="div">{errorMessage}</Box>
+          {errorMessage && (
+            <Box component="div" className=" flex items-center text-red-500">
+              <WarningAmberIcon sx={{ fontSize: "24px" }} /> {errorMessage}
+            </Box>
+          )}
+          <Box className="mx-auto">
+            <UserFormButton onClick={handleFormSubmit}>Log in</UserFormButton>
+          </Box>
         </Box>
         {/* Link to Sign up page */}
-        {location.state ? (
-          <Link to="/author/signup" state={{ from: location.state.from }}>
-            Create an account
-          </Link>
-        ) : (
-          <Link to="/author/signup">Create an account</Link>
-        )}
+        <Box className="mt-3">
+          {location.state ? (
+            <UserFormLink
+              to="/author/signup"
+              state={{ from: location.state.from }}
+            >
+              Create an account
+            </UserFormLink>
+          ) : (
+            <UserFormLink to="/author/signup">Create an account</UserFormLink>
+          )}
+        </Box>
       </Box>
     </Box>
   );

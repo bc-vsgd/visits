@@ -5,7 +5,7 @@ const HomeVisitLink = ({ to, state, children }) => {
   //   console.log("state: ", state);
   return (
     <Link
-      className="no-underline flex justify-between text-lg py-1 px-2 border-b border-x-0 border-t-0 border-solid border-black "
+      className="flex justify-between border-x-0 border-b border-t-0 border-solid border-black px-2 py-1 text-lg no-underline "
       to={to}
       state={state}
     >

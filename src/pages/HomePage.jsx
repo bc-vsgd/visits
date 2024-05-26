@@ -7,7 +7,14 @@ import Loader from "../components/Loader";
 import HomeVisitTitle from "../components/HomeVisitTitle";
 import HomeVisitLink from "../components/HomeVisitLink";
 // MUI components
-import { CssBaseline, Typography, Box, Button } from "@mui/material";
+import {
+  CssBaseline,
+  Typography,
+  Box,
+  Button,
+  Card,
+  CardMedia,
+} from "@mui/material";
 // Icons
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
@@ -45,7 +52,7 @@ const HomePage = ({ url, userToken }) => {
       fetchData();
     },
     // Reload when log out
-    [userToken]
+    [userToken],
   );
 
   // Get visits data
@@ -75,15 +82,14 @@ const HomePage = ({ url, userToken }) => {
       fetchData();
     },
     // Reload when log out
-    [isUserLoading, userToken, userId]
+    [isUserLoading, userToken, userId],
   );
 
   return isLoading ? (
     <Loader />
   ) : (
-    <Box component="main" className="font-roboto container mx-auto w-[1000px]">
+    <Box component="main" className="container mx-auto w-[1000px] font-roboto">
       <CssBaseline />
-
       <Box component="div">
         {/* No visit */}
         {data.foundVisits.length === 0 ? (

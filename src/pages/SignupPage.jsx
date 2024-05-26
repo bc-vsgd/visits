@@ -59,7 +59,7 @@ const Signup = ({ url, setUserToken }) => {
   };
 
   return (
-    <Box component="main" className="font-roboto mx-auto w-[1000px]">
+    <Box component="main" className="mx-auto w-[1000px] font-roboto">
       <Box component="div">
         <Box component="form" className="flex flex-col ">
           <UserFormTextField
@@ -95,11 +95,13 @@ const Signup = ({ url, setUserToken }) => {
             }}
           />
           {errorMessage && (
-            <Box component="div" className=" flex text-red-500 items-center">
+            <Box component="div" className=" flex items-center text-red-500">
               <WarningAmberIcon sx={{ fontSize: "24px" }} /> {errorMessage}
             </Box>
           )}
-          <UserFormButton onClick={handleFormSubmit}>Sign up</UserFormButton>
+          <Box className="mx-auto">
+            <UserFormButton onClick={handleFormSubmit}>Sign up</UserFormButton>
+          </Box>
         </Box>
         {/* Link to Log in page */}
         <Box className="mt-3">

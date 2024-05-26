@@ -10,25 +10,25 @@ import HeaderButton from "./HeaderButton";
 const Header = ({ userToken, setUserToken }) => {
   const navigate = useNavigate();
   return (
-    <Box component="header" className="flex font-roboto mb-4">
+    <Box component="header" className="mb-4 flex font-roboto">
       <Box
         component="div"
-        className="flex justify-between w-3/4 my-0 mx-auto border-2 border-solid border-blue-500"
+        className="mx-auto my-0 flex w-3/4 justify-between border-2 border-solid border-blue-500"
       >
         <Box component="div">
-          <Link className="header-link" to="/">
+          <Link to="/">
             <HeaderButton startIcon={<HomeIcon />}>Home</HeaderButton>
           </Link>
         </Box>
         {!userToken ? (
           <Box component="div" className="flex justify-between ">
             <Box component="div">
-              <Link className="header-link" to="/author/signup">
+              <Link to="/author/signup">
                 <HeaderButton>Sign up</HeaderButton>
               </Link>
             </Box>
             <Box component="div">
-              <Link className="header-link" to="/author/login">
+              <Link to="/author/login">
                 <HeaderButton>Log in</HeaderButton>
               </Link>
             </Box>

@@ -9,12 +9,20 @@ import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 // Packages
 import axios from "axios";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-// Components
-import Loader from "../components/Loader";
-// Modal
-import SpotModal from "../components/SpotModal";
+// import L from "leaflet"
 // MUI components
 import { Box, Button } from "@mui/material";
+// Icons
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import AddLocationIcon from "@mui/icons-material/AddLocation";
+import RefreshIcon from "@mui/icons-material/Refresh";
+// Components
+import Loader from "../components/Loader";
+import VisitPageButton from "../components/VisitPageButton";
+import VisitPageLink from "../components/VisitPageLink";
+// Modal
+import SpotModal from "../components/SpotModal";
 
 const VisitPage = ({ url }) => {
   const navigate = useNavigate();
@@ -51,8 +59,12 @@ const VisitPage = ({ url }) => {
       setPosition(event.latlng);
       // map.flyTo(event.latlng, map.getZoom());
     });
-    return position === null ? null : <Marker position={position}></Marker>;
+    return position === null ? null : (
+      <Marker position={position} className="text-black"></Marker>
+    );
   };
+
+  // const userIcon = new L.icon({})
 
   // 1st use effect: get visit data
   useEffect(() => {
@@ -90,31 +102,17 @@ const VisitPage = ({ url }) => {
   return isVisitLoading || isSpotsLoading ? (
     <Loader />
   ) : (
-    <Box component="main" className="font-roboto relative">
-      <Box component="div" className="flex">
-        <Box component="div">{visitData.title}</Box>
-        {/* Author authenticated => possibility to update */}
-        {location.state && location.state.userToken === userToken && (
-          <>
-            <Link to={`/visit/${id}/update`} state={{ userToken: userToken }}>
-              <Button>Update visit title</Button>
-            </Link>
-            <Button
-              onClick={() => {
-                const { data } = axios.delete(
-                  `${url}/visits/visit/${id}/delete`
-                );
-                navigate("/");
-              }}
-            >
-              Delete this visit
-            </Button>
-          </>
-        )}
+    <Box
+      component="main"
+      className="relative mx-auto w-[1000px] border-2 border-solid border-black font-roboto"
+    >
+      <Box component="div" className="flex gap-x-3 text-lg ">
+        <span>{visitData.title}</span>
+        {visitData.city && <span>{visitData.city}</span>}
       </Box>
 
       <MapContainer
-        className="h-[400px] w-[500px]"
+        className="mx-auto h-[500px] w-[800px]"
         center={centerCoords}
         zoom={12}
         scrollWheelZoom={true}
@@ -165,27 +163,53 @@ const VisitPage = ({ url }) => {
         })}
       </MapContainer>
 
-      {/* Author authenticated => possibility to add a spot */}
+      {/* Visit description */}
+
+      {/* Author authenticated => possibility to update & delete the visit, and to add a spot */}
       {location.state && location.state.userToken === userToken && (
-        <Button
-          onClick={() => {
-            navigate(`/visit/form/${id}/spots`, {
-              state: {
-                title: visitData.title,
-                city: visitData.city,
-                details: visitData.city_details,
-                userToken: userToken,
-              },
-            });
-          }}
-        >
-          Add a spot
-        </Button>
+        <Box component="div" className="flex justify-between">
+          <VisitPageLink
+            to={`/visit/${id}/update`}
+            state={{ userToken: userToken }}
+          >
+            <VisitPageButton startIcon={<RefreshIcon />}>
+              Update visit title
+            </VisitPageButton>
+          </VisitPageLink>
+          <VisitPageButton
+            onClick={() => {
+              const { data } = axios.delete(`${url}/visits/visit/${id}/delete`);
+              navigate("/");
+            }}
+            startIcon={<DeleteIcon />}
+          >
+            Delete this visit
+          </VisitPageButton>
+          <VisitPageButton
+            onClick={() => {
+              navigate(`/visit/form/${id}/spots`, {
+                state: {
+                  title: visitData.title,
+                  city: visitData.city,
+                  details: visitData.city_details,
+                  userToken: userToken,
+                },
+              });
+            }}
+            startIcon={<AddLocationIcon />}
+          >
+            Add a spot
+          </VisitPageButton>
+        </Box>
       )}
 
       {/* Create a visit (authenticated or not) */}
-      <Box component="div">
-        <Link to="/visit/form">Create a visit</Link>
+      <Box component="div" className="flex justify-end">
+        <VisitPageLink to="/visit/form">
+          <VisitPageButton startIcon={<AddCircleIcon />}>
+            Create a new visit
+          </VisitPageButton>
+        </VisitPageLink>
       </Box>
     </Box>
   );
