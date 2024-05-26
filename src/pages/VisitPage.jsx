@@ -8,7 +8,15 @@ import { useState, useEffect } from "react";
 import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 // Packages
 import axios from "axios";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMap,
+  CircleMarker,
+} from "react-leaflet";
+import L from "leaflet";
 // import L from "leaflet"
 // MUI components
 import { Box, Button } from "@mui/material";
@@ -17,11 +25,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import PersonPinCircleIcon from "@mui/icons-material/PersonPinCircle";
 // Components
 import Loader from "../components/Loader";
 import VisitPageButton from "../components/VisitPageButton";
 import VisitPageLink from "../components/VisitPageLink";
-// Modal
+// Modal component
 import SpotModal from "../components/SpotModal";
 
 const VisitPage = ({ url }) => {
@@ -60,11 +69,14 @@ const VisitPage = ({ url }) => {
       // map.flyTo(event.latlng, map.getZoom());
     });
     return position === null ? null : (
-      <Marker position={position} className="text-black"></Marker>
+      // <Marker position={position}></Marker>
+      <CircleMarker center={position}></CircleMarker>
     );
   };
 
-  // const userIcon = new L.icon({})
+  // const userIcon = new L.icon({
+  //   iconUrl:
+  // })
 
   // 1st use effect: get visit data
   useEffect(() => {

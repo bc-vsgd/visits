@@ -43,8 +43,8 @@ const SpotModal = ({
   };
   return (
     spot && (
-      <Modal open={open} onClose={handleClose}>
-        <Card className="w-80" component="div">
+      <Modal open={open} onClose={handleClose} className="mx-auto w-[800px]">
+        <Card component="div">
           <CardContent>
             <Button
               onClick={() => {
