@@ -3,6 +3,8 @@ import { useLocation, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 // Components
 import Loader from "../components/Loader";
+import SpotModalTextField from "../components/SpotModalTextField";
+import SpotModalButton from "../components/SpotModalButton";
 // MUI components
 import {
   Box,
@@ -13,6 +15,10 @@ import {
   Button,
   TextField,
 } from "@mui/material";
+// MUI icons
+import DeleteIcon from "@mui/icons-material/Delete";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import { blue } from "@mui/material/colors";
 
 const SpotUpdatePage = ({ url }) => {
   const location = useLocation();
@@ -112,7 +118,7 @@ const SpotUpdatePage = ({ url }) => {
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
-          }
+          },
         );
         // console.log("Spot update, data: ", data);
         if (location.state) {
@@ -148,15 +154,26 @@ const SpotUpdatePage = ({ url }) => {
   }
   return (
     <Box component="div">
-      <Box component="form" className="flex-col h-[500px]">
+      <Box component="form" className="h-[500px] flex-col">
         {/* Pictures */}
         <Box component="div" className="flex-col">
-          <Input
-            inputProps={{
-              multiple: true,
-            }}
-            className="h-8"
+          <label for="input-files">
+            <p className="  w-48 border-2 border-solid bg-gray-100 py-3 text-center font-roboto">
+              Choose files
+            </p>
+            {/* <Button>Choose ...</Button> */}
+          </label>
+          <input
+            // inputProps={{
+            //   multiple: true,
+            //   color: "blue",
+            //   width: "300px",
+            // }}
+
+            id="input-files"
+            className="h-8 opacity-0"
             type="file"
+            multiple
             onChange={(event) => {
               // Pictures already selected: add new pictures
               if (Object.entries(files).length > 0) {
@@ -261,12 +278,11 @@ const SpotUpdatePage = ({ url }) => {
           )}
         </Box>
 
-        <Box component="div" className="flex">
+        {/* Title, description, categories, link */}
+        <Box component="div" className="flex flex-col">
           {/* Title */}
-          <TextField
-            required
-            className="h-8"
-            variant="standard"
+          <SpotModalTextField
+            required={true}
             label="Title"
             value={title && title}
             onChange={(event) => {
@@ -275,9 +291,8 @@ const SpotUpdatePage = ({ url }) => {
             }}
           />
           {/* Description */}
-          <TextField
-            className="h-8"
-            variant="standard"
+          <SpotModalTextField
+            multiline={true}
             label="Description"
             value={description && description}
             onChange={(event) => {
@@ -317,23 +332,23 @@ const SpotUpdatePage = ({ url }) => {
             })}
           </Box> */}
           {/* Link */}
-          <TextField
-            variant="standard"
-            className="h-8"
+          <SpotModalTextField
             label="Link"
             value={link && link}
             onChange={(event) => {
               setLink(event.target.value);
             }}
           />
-          {/* Button: update the spot */}
-          <Button className="h-8 w-24" onClick={spotFormSubmit}>
+        </Box>
+
+        {/* Buttons: update & delete the spot */}
+        <Box>
+          <SpotModalButton startIcon={<RefreshIcon />} onClick={spotFormSubmit}>
             Update this spot
-          </Button>
-          {/* Button: delete the spot */}
+          </SpotModalButton>
           {location.state && location.state.spotsDataLength > 1 && (
-            <Button
-              className="h-8 w-24"
+            <SpotModalButton
+              startIcon={<DeleteIcon />}
               onClick={() => {
                 const { data } = axios.delete(`${url}/visit/spot/${id}/delete`);
                 if (location.state) {
@@ -344,21 +359,8 @@ const SpotUpdatePage = ({ url }) => {
               }}
             >
               Delete this spot
-            </Button>
+            </SpotModalButton>
           )}
-          {/* <Button
-            className="h-8 w-24"
-            onClick={() => {
-              const { data } = axios.delete(`${url}/visit/spot/${id}/delete`);
-              if (location.state) {
-                navigate(location.state.from, {
-                  state: { userToken: location.state.userToken },
-                });
-              }
-            }}
-          >
-            Delete this spot
-          </Button> */}
         </Box>
         <Box component="div">{errorMessage}</Box>
       </Box>

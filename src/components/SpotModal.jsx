@@ -2,7 +2,7 @@
 // Displays main picture with button 'Open' and button 'Update' if user authenticated
 
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 // MUI components
 import {
@@ -13,8 +13,12 @@ import {
   Typography,
   CardMedia,
 } from "@mui/material";
+// MUI icons
+import RefreshIcon from "@mui/icons-material/Refresh";
+
 // Components
 import SpotDisplayModal from "./SpotDisplayModal";
+import SpotModalButton from "./SpotModalButton";
 
 const SpotModal = ({
   open,
@@ -46,14 +50,23 @@ const SpotModal = ({
       <Modal open={open} onClose={handleClose} className="mx-auto w-[800px]">
         <Card component="div">
           <CardContent>
-            <Button
+            <SpotModalButton
               onClick={() => {
                 handleOpenModal(spot);
               }}
             >
               Open
-            </Button>
-            <Typography component="div">{spot.title}</Typography>
+            </SpotModalButton>
+            {/* <Button
+              onClick={() => {
+                handleOpenModal(spot);
+              }}
+            >
+              Open
+            </Button> */}
+            <Typography variant="h5" component="div">
+              {spot.title}
+            </Typography>
           </CardContent>
 
           {spot.spot_image && (
@@ -63,8 +76,17 @@ const SpotModal = ({
               alt={spot.title}
             />
           )}
+          <CardContent>
+            {spot.description && <Typography>{spot.description}</Typography>}
+            {spot.link && (
+              <Link to={spot.link} target="_blank">
+                {spot.title}
+              </Link>
+            )}
+          </CardContent>
           {userToken && (
-            <Button
+            <SpotModalButton
+              startIcon={<RefreshIcon />}
               onClick={() => {
                 navigate(`/visit/spot/${spot._id}/update`, {
                   state: {
@@ -76,7 +98,20 @@ const SpotModal = ({
               }}
             >
               Update this spot
-            </Button>
+            </SpotModalButton>
+            // <Button
+            //   onClick={() => {
+            //     navigate(`/visit/spot/${spot._id}/update`, {
+            //       state: {
+            //         from: `/visit/${visitId}`,
+            //         userToken: userToken,
+            //         spotsDataLength: spotsDataLength,
+            //       },
+            //     });
+            //   }}
+            // >
+            //   Update this spot
+            // </Button>
           )}
           {/* Click => Spot Display Modal: 4th version */}
           <SpotDisplayModal
