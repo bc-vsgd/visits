@@ -5,14 +5,7 @@ import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
 // MUI components
-import {
-  Modal,
-  Card,
-  CardContent,
-  Button,
-  Typography,
-  CardMedia,
-} from "@mui/material";
+import { Modal, Card, CardContent, Typography, CardMedia } from "@mui/material";
 // MUI icons
 import RefreshIcon from "@mui/icons-material/Refresh";
 
@@ -57,13 +50,6 @@ const SpotModal = ({
             >
               Open
             </SpotModalButton>
-            {/* <Button
-              onClick={() => {
-                handleOpenModal(spot);
-              }}
-            >
-              Open
-            </Button> */}
             <Typography variant="h5" component="div">
               {spot.title}
             </Typography>
@@ -99,19 +85,6 @@ const SpotModal = ({
             >
               Update this spot
             </SpotModalButton>
-            // <Button
-            //   onClick={() => {
-            //     navigate(`/visit/spot/${spot._id}/update`, {
-            //       state: {
-            //         from: `/visit/${visitId}`,
-            //         userToken: userToken,
-            //         spotsDataLength: spotsDataLength,
-            //       },
-            //     });
-            //   }}
-            // >
-            //   Update this spot
-            // </Button>
           )}
           {/* Click => Spot Display Modal: 4th version */}
           <SpotDisplayModal

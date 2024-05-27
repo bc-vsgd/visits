@@ -2,15 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // MUI components
-import {
-  Box,
-  Button,
-  TextField,
-  Card,
-  CardMedia,
-  CardActions,
-  Input,
-} from "@mui/material";
+import { Box, Button, Card, CardMedia, CardActions } from "@mui/material";
+// MUI icons
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import UploadIcon from "@mui/icons-material/Upload";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+
+// Components
+import VisitFormTextField from "./VisitFormTextField";
+import VisitFormButton from "./VisitFormButton";
 
 const OneSpotForm = ({
   url,
@@ -56,7 +56,7 @@ const OneSpotForm = ({
         const { data } = await axios.post(
           `${url}/visit/${id}/spot/create`,
           formData,
-          { headers: { "Content-Type": "multipart/form-data" } }
+          { headers: { "Content-Type": "multipart/form-data" } },
         );
         console.log("One spot comp, data: ", data);
         setDataLength((prev) => {
@@ -93,15 +93,19 @@ const OneSpotForm = ({
 
   return (
     <Box component="div">
-      <Box component="form" className="flex-col ">
+      <Box component="form" className="flex flex-col">
         {/* Pictures */}
         <Box component="div">
-          <Input
-            inputProps={{
-              multiple: true,
-            }}
-            className="h-8"
+          <label for="visit-input-files">
+            <p className="  w-48 rounded-lg border-2 border-solid bg-gray-100 py-3 text-center font-roboto">
+              Choose files
+            </p>
+          </label>
+          <input
+            id="visit-input-files"
+            className="h-8 opacity-0"
             type="file"
+            multiple
             onChange={(event) => {
               // Pictures already selected: add new pictures
               if (Object.entries(files).length > 0) {
@@ -147,30 +151,26 @@ const OneSpotForm = ({
             </Box>
           )}
         </Box>
-        <Box className="flex">
-          <Box component="div" className="flex">
-            {/* Title */}
-            <TextField
-              required
-              className="h-8"
-              variant="standard"
-              label="Title"
-              onChange={(event) => {
-                setTitle(event.target.value);
-                setErrorMessage("");
-              }}
-            />
-            {/* Description */}
-            <TextField
-              className="h-8"
-              variant="standard"
-              label="Description"
-              onChange={(event) => {
-                setDescription(event.target.value);
-              }}
-            />
-            {/* Categories */}
-            {/* <Box component="div" className="flex-col">
+        {/* Title, description, link */}
+        <Box component="div" className="flex flex-col">
+          {/* Title */}
+          <VisitFormTextField
+            required={true}
+            label="Title"
+            onChange={(event) => {
+              setTitle(event.target.value);
+              setErrorMessage("");
+            }}
+          />
+          {/* Description */}
+          <VisitFormTextField
+            label="Description"
+            onChange={(event) => {
+              setDescription(event.target.value);
+            }}
+          />
+          {/* Categories */}
+          {/* <Box component="div" className="flex-col">
             {categories.map((category, index) => {
               return (
                 <Box component="div" key={index}>
@@ -201,32 +201,37 @@ const OneSpotForm = ({
               );
             })}
           </Box> */}
-            {/* Link */}
-            <TextField
-              variant="standard"
-              className="h-8"
-              label="Link"
-              onChange={(event) => {
-                setLink(event.target.value);
-              }}
-            />
-          </Box>
-          {/* Button: add the spot */}
-          <Button className="h-8 w-24" onClick={spotFormSubmit}>
+          {/* Link */}
+          <VisitFormTextField
+            label="Link"
+            onChange={(event) => {
+              setLink(event.target.value);
+            }}
+          />
+          {errorMessage && (
+            <Box component="div" className=" flex items-center text-red-500">
+              <WarningAmberIcon sx={{ fontSize: "24px" }} /> {errorMessage}
+            </Box>
+          )}
+        </Box>
+        <Box>
+          {/* Buttons: add the spot & register the visit*/}
+          <VisitFormButton
+            startIcon={<AddCircleIcon />}
+            onClick={spotFormSubmit}
+          >
             Add this spot
-          </Button>
-          <Box component="div">{errorMessage}</Box>
+          </VisitFormButton>
 
-          {/* Button: register the visit */}
           {dataLength > 0 && (
-            <Button
-              className="h-8 w-24"
+            <VisitFormButton
+              startIcon={<UploadIcon />}
               onClick={() => {
                 navigate(`/visit/${id}`, { state: { userToken: userToken } });
               }}
             >
               Close this visit
-            </Button>
+            </VisitFormButton>
           )}
         </Box>
       </Box>

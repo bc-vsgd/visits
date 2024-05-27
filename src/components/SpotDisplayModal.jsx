@@ -70,7 +70,7 @@ const SpotDisplayModal = ({ spot, open, handleClose }) => {
           ...modalBoxStyle,
           bgcolor: "white",
           width: "40%",
-          height: 700,
+          height: 1000,
         }}
       >
         <CardContent>

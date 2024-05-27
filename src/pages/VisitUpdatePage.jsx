@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+// MUI components
+import { Box, Typography } from "@mui/material";
 // Components
 import OneSpotForm from "../components/OneSpotForm";
-// MUI components
-import { Box, Typography, TextField } from "@mui/material";
 
 const VisitUpdatePage = ({ url }) => {
   const location = useLocation();
@@ -22,7 +22,7 @@ const VisitUpdatePage = ({ url }) => {
 
   const visitSubmit = (event) => {
     event.preventDefault();
-    console.log("visit submit");
+    // console.log("visit submit");
   };
 
   return (

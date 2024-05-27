@@ -5,19 +5,17 @@
 
 // React
 import { useState, useEffect } from "react";
-import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 // Packages
 import axios from "axios";
+// Leaflet components
 import {
   MapContainer,
   TileLayer,
   Marker,
-  Popup,
   useMap,
   CircleMarker,
 } from "react-leaflet";
-import L from "leaflet";
-// import L from "leaflet"
 // MUI components
 import { Box, Button } from "@mui/material";
 // Icons
@@ -25,7 +23,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import PersonPinCircleIcon from "@mui/icons-material/PersonPinCircle";
 // Components
 import Loader from "../components/Loader";
 import VisitPageButton from "../components/VisitPageButton";
@@ -56,27 +53,16 @@ const VisitPage = ({ url }) => {
     setOpen(false);
   };
 
-  // const UserLocation = () => {
-  //   const map = useMap();
-  //   // map.locate({ setView: true, zoom: 12 });
-  //   return null;
-  // };
   const UserLocationMarker = () => {
     const [position, setPosition] = useState(null);
     const map = useMap();
     map.locate().on("locationfound", function (event) {
       setPosition(event.latlng);
-      // map.flyTo(event.latlng, map.getZoom());
     });
     return position === null ? null : (
-      // <Marker position={position}></Marker>
       <CircleMarker center={position}></CircleMarker>
     );
   };
-
-  // const userIcon = new L.icon({
-  //   iconUrl:
-  // })
 
   // 1st use effect: get visit data
   useEffect(() => {
@@ -114,17 +100,14 @@ const VisitPage = ({ url }) => {
   return isVisitLoading || isSpotsLoading ? (
     <Loader />
   ) : (
-    <Box
-      component="main"
-      className="relative mx-auto w-[1000px] border-2 border-solid border-black font-roboto"
-    >
+    <Box component="main" className="relative mx-auto w-[1000px]  font-roboto">
       <Box component="div" className="flex gap-x-3 text-lg ">
         <span>{visitData.title}</span>
         {visitData.city && <span>{visitData.city}</span>}
       </Box>
 
       <MapContainer
-        className="mx-auto h-[500px] w-[800px]"
+        className="mx-auto h-[700px] w-[1000px]"
         center={centerCoords}
         zoom={12}
         scrollWheelZoom={true}
@@ -145,8 +128,6 @@ const VisitPage = ({ url }) => {
               key={spot._id}
               position={[spot.coords.latitude, spot.coords.longitude]}
             >
-              {/* <Popup>{spot.title}</Popup> */}
-
               {/* Modal */}
               {/* If user is the author => can update the spots */}
               {spotsData &&

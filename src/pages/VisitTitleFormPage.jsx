@@ -2,7 +2,14 @@ import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
 // MUI components
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+// MUI icons
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+
+// Components
+import VisitFormTextField from "../components/VisitFormTextField";
+import VisitFormButton from "../components/VisitFormButton";
 
 const VisitTitleFormPage = ({ url, userToken }) => {
   const navigate = useNavigate();
@@ -18,7 +25,7 @@ const VisitTitleFormPage = ({ url, userToken }) => {
         const data = await axios.post(
           `${url}/visits/visit/create`,
           { title, city, city_details: details },
-          { headers: { Authorization: `Bearer ${userToken}` } }
+          { headers: { Authorization: `Bearer ${userToken}` } },
         );
         // console.log("visit form page, data: ", data);
         const id = data.data.visit._id;
@@ -36,40 +43,46 @@ const VisitTitleFormPage = ({ url, userToken }) => {
   return !userToken ? (
     <Navigate to="/author/login" state={{ from: "/visit/form" }} />
   ) : (
-    <Box component="main" className="font-roboto">
+    <Box component="main" className="mx-auto w-[1000px] font-roboto">
       <Box component="div">
         <Typography variant="h4">New visit</Typography>
-        {/* Title form component ? */}
         <Box component="div">
-          <Box component="form">
-            <TextField
-              required
-              variant="standard"
+          <Box component="form" className="flex flex-col">
+            <VisitFormTextField
+              required={true}
               label="Visit title"
               onChange={(event) => {
                 setTitle(event.target.value);
                 setErrorMessage("");
               }}
             />
-            <TextField
-              variant="standard"
+            <VisitFormTextField
               label="City"
               onChange={(event) => {
                 setCity(event.target.value);
               }}
             />
-            <TextField
-              variant="standard"
+            <VisitFormTextField
               label="City details ..."
               onChange={(event) => {
                 setDetails(event.target.value);
               }}
             />
-            <Button onClick={visitFormSubmit}>Add a spot</Button>
-            <Box component="div">{errorMessage}</Box>
+            {errorMessage && (
+              <Box component="div" className=" flex items-center text-red-500">
+                <WarningAmberIcon sx={{ fontSize: "24px" }} /> {errorMessage}
+              </Box>
+            )}
+          </Box>
+          <Box>
+            <VisitFormButton
+              onClick={visitFormSubmit}
+              startIcon={<AddCircleIcon />}
+            >
+              Add a spot
+            </VisitFormButton>
           </Box>
         </Box>
-        {/* Title form component ? */}
       </Box>
     </Box>
   );

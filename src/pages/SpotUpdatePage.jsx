@@ -6,19 +6,10 @@ import Loader from "../components/Loader";
 import SpotModalTextField from "../components/SpotModalTextField";
 import SpotModalButton from "../components/SpotModalButton";
 // MUI components
-import {
-  Box,
-  Input,
-  Card,
-  CardMedia,
-  CardActions,
-  Button,
-  TextField,
-} from "@mui/material";
+import { Box, Card, CardMedia, CardActions } from "@mui/material";
 // MUI icons
 import DeleteIcon from "@mui/icons-material/Delete";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { blue } from "@mui/material/colors";
 
 const SpotUpdatePage = ({ url }) => {
   const location = useLocation();
@@ -153,23 +144,16 @@ const SpotUpdatePage = ({ url }) => {
     return <Loader />;
   }
   return (
-    <Box component="div">
-      <Box component="form" className="h-[500px] flex-col">
+    <Box component="div" className="mx-auto w-[1000px]">
+      <Box component="form" className=" flex-col">
         {/* Pictures */}
         <Box component="div" className="flex-col">
           <label for="input-files">
-            <p className="  w-48 border-2 border-solid bg-gray-100 py-3 text-center font-roboto">
+            <p className="  w-48 rounded-lg border-2 border-solid bg-gray-100 py-3 text-center font-roboto">
               Choose files
             </p>
-            {/* <Button>Choose ...</Button> */}
           </label>
           <input
-            // inputProps={{
-            //   multiple: true,
-            //   color: "blue",
-            //   width: "300px",
-            // }}
-
             id="input-files"
             className="h-8 opacity-0"
             type="file"
@@ -203,14 +187,13 @@ const SpotUpdatePage = ({ url }) => {
                   alt="Picture"
                   image={image.secure_url}
                 />
-                <CardActions>
-                  <Button
+                <CardActions className="flex justify-end">
+                  <SpotModalButton
+                    startIcon={<DeleteIcon />}
                     onClick={() => {
                       setImage(null);
                     }}
-                  >
-                    X
-                  </Button>
+                  ></SpotModalButton>
                 </CardActions>
               </Card>
             )}
@@ -227,8 +210,9 @@ const SpotUpdatePage = ({ url }) => {
                         alt="Picture"
                         image={picture.secure_url}
                       />
-                      <CardActions>
-                        <Button
+                      <CardActions className="flex justify-end">
+                        <SpotModalButton
+                          startIcon={<DeleteIcon />}
                           onClick={() => {
                             setPictures((prev) => {
                               const newArr = [...prev];
@@ -241,9 +225,7 @@ const SpotUpdatePage = ({ url }) => {
                               }
                             });
                           }}
-                        >
-                          X
-                        </Button>
+                        ></SpotModalButton>
                       </CardActions>
                     </Card>
                   );
@@ -262,14 +244,13 @@ const SpotUpdatePage = ({ url }) => {
                       alt="Picture"
                       image={URL.createObjectURL(files[fileKey])}
                     />
-                    <CardActions>
-                      <Button
+                    <CardActions className="flex justify-end">
+                      <SpotModalButton
+                        startIcon={<DeleteIcon />}
                         onClick={() => {
                           deleteFile(fileKey);
                         }}
-                      >
-                        X
-                      </Button>
+                      ></SpotModalButton>
                     </CardActions>
                   </Card>
                 );

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
+// MUI components
+import { Box, Typography, Card, CardMedia } from "@mui/material";
 // Components
 import Loader from "../components/Loader";
 import OneSpotForm from "../components/OneSpotForm";
-// MUI components
-import { Box, Typography, Card, CardMedia } from "@mui/material";
 
 const SpotsFormsPage = ({ url }) => {
   // id: visit id
@@ -36,11 +36,11 @@ const SpotsFormsPage = ({ url }) => {
   return isLoading ? (
     <Loader />
   ) : (
-    <Box component="div" className="font-roboto">
+    <Box component="div" className="mx-auto w-[1000px] font-roboto">
       {/* Display visit title */}
       <Box component="div">
-        <Typography>{title}</Typography>
-        <Typography>{city}</Typography>
+        <Typography variant="h5">{title}</Typography>
+        <Typography variant="h6">{city}</Typography>
         <Typography>{details}</Typography>
       </Box>
       {/* Display existing spots */}
