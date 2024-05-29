@@ -18,7 +18,10 @@ import SpotUpdatePage from "./pages/SpotUpdatePage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 //
-const url = "http://localhost:3000";
+// Local
+// const url = "http://localhost:3000";
+// Remote
+const url = "https://site--home--r6xgg7xm7vcz.code.run";
 // Style
 import "./App.css";
 
