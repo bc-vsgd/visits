@@ -7,16 +7,22 @@ import {
   Modal,
   Box,
   Typography,
-  Button,
   Card,
   CardContent,
   CardMedia,
 } from "@mui/material";
+// MUI icons
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import CloseIcon from "@mui/icons-material/Close";
+
+// Components
+import SpotModalButton from "./SpotModalButton";
 // Style
 const modalBoxStyle = {
   position: "absolute",
   top: "10%",
-  left: "30%",
+  left: "25%",
 };
 
 const SpotDisplayModal = ({ spot, open, handleClose }) => {
@@ -69,40 +75,53 @@ const SpotDisplayModal = ({ spot, open, handleClose }) => {
         sx={{
           ...modalBoxStyle,
           bgcolor: "white",
-          width: "40%",
-          height: 1000,
+          width: "50%",
+          height: 800,
         }}
       >
         <CardContent>
-          <Button
-            onClick={() => {
-              handleClose();
-            }}
-          >
-            X
-          </Button>
+          <Box className="flex justify-end">
+            <SpotModalButton
+              onClick={() => {
+                handleClose();
+              }}
+              startIcon={<CloseIcon />}
+            />
+          </Box>
           <Box component="div">
             <Typography>{spot.title}</Typography>
-            {picsArray.length > 1 && (
-              <Button
-                onClick={() => {
-                  changePicture("-");
-                }}
-              >
-                -
-              </Button>
-            )}
-            <CardMedia component="img" image={imgToDisplay} alt={spot.title} />
-            {picsArray.length > 1 && (
-              <Button
-                onClick={() => {
-                  changePicture("+");
-                }}
-              >
-                +
-              </Button>
-            )}
-            <Typography>{spot.description}</Typography>
+            <Box className="flex">
+              {picsArray.length > 1 && (
+                <SpotModalButton
+                  onClick={() => {
+                    changePicture("-");
+                  }}
+                  startIcon={<ChevronLeftIcon />}
+                />
+              )}
+              <CardMedia
+                component="img"
+                image={imgToDisplay}
+                alt={spot.title}
+                className="w-[700px]"
+              />
+              {picsArray.length > 1 && (
+                <SpotModalButton
+                  onClick={() => {
+                    changePicture("+");
+                  }}
+                  startIcon={<ChevronRightIcon />}
+                />
+              )}
+            </Box>
+            <CardContent>
+              {spot.description && <Typography>{spot.description}</Typography>}
+              {spot.link && (
+                <Link to={spot.link} target="_blank">
+                  {spot.title}
+                </Link>
+              )}
+            </CardContent>
           </Box>
         </CardContent>
       </Card>

@@ -11,7 +11,7 @@ const SpotsFormsPage = ({ url }) => {
   // id: visit id
   const { id } = useParams();
   const location = useLocation();
-  const { title, city, details, userToken } = location.state;
+  const { title, city, details, description, userToken } = location.state;
   const [data, setData] = useState([]);
   // Spots number
   const [dataLength, setDataLength] = useState(0);
@@ -42,6 +42,7 @@ const SpotsFormsPage = ({ url }) => {
         <Typography variant="h5">{title}</Typography>
         <Typography variant="h6">{city}</Typography>
         <Typography>{details}</Typography>
+        <Typography>{description}</Typography>
       </Box>
       {/* Display existing spots */}
       {data && (

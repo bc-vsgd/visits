@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // MUI components
-import { Box, Button, Card, CardMedia, CardActions } from "@mui/material";
+import { Box, Card, CardMedia, CardActions } from "@mui/material";
 // MUI icons
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import UploadIcon from "@mui/icons-material/Upload";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 // Components
 import VisitFormTextField from "./VisitFormTextField";
 import VisitFormButton from "./VisitFormButton";
@@ -136,14 +136,13 @@ const OneSpotForm = ({
                       alt="Picture"
                       image={URL.createObjectURL(files[fileKey])}
                     />
-                    <CardActions>
-                      <Button
+                    <CardActions className="flex justify-end">
+                      <VisitFormButton
                         onClick={() => {
                           deleteFile(fileKey);
                         }}
-                      >
-                        X
-                      </Button>
+                        startIcon={<DeleteIcon />}
+                      />
                     </CardActions>
                   </Card>
                 );

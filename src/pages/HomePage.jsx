@@ -70,7 +70,7 @@ const HomePage = ({ url, userToken }) => {
               }
             } else {
               const { data } = await axios.get(`${url}/visits`);
-              // console.log("home page, fetch 2, data: ", data);
+              console.log("home page, fetch 2, data: ", data);
               setData(data);
             }
           } catch (error) {

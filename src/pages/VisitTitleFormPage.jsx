@@ -16,6 +16,7 @@ const VisitTitleFormPage = ({ url, userToken }) => {
   const [title, setTitle] = useState("");
   const [city, setCity] = useState("");
   const [details, setDetails] = useState("");
+  const [description, setDescription] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const visitFormSubmit = async (event) => {
@@ -24,13 +25,13 @@ const VisitTitleFormPage = ({ url, userToken }) => {
       try {
         const data = await axios.post(
           `${url}/visits/visit/create`,
-          { title, city, city_details: details },
+          { title, city, city_details: details, description },
           { headers: { Authorization: `Bearer ${userToken}` } },
         );
         // console.log("visit form page, data: ", data);
         const id = data.data.visit._id;
         navigate(`/visit/form/${id}/spots`, {
-          state: { title, city, details, userToken },
+          state: { title, city, details, description, userToken },
         });
       } catch (error) {
         console.log("Visit form page, error: ", error);
@@ -66,6 +67,12 @@ const VisitTitleFormPage = ({ url, userToken }) => {
               label="City details ..."
               onChange={(event) => {
                 setDetails(event.target.value);
+              }}
+            />
+            <VisitFormTextField
+              label="Description"
+              onChange={(event) => {
+                setDescription(event.target.value);
               }}
             />
             {errorMessage && (

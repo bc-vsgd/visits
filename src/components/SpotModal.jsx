@@ -5,10 +5,19 @@ import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
 // MUI components
-import { Modal, Card, CardContent, Typography, CardMedia } from "@mui/material";
+import {
+  Box,
+  Modal,
+  Card,
+  CardContent,
+  Typography,
+  CardMedia,
+} from "@mui/material";
 // MUI icons
 import RefreshIcon from "@mui/icons-material/Refresh";
-
+import CloseIcon from "@mui/icons-material/Close";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 // Components
 import SpotDisplayModal from "./SpotDisplayModal";
 import SpotModalButton from "./SpotModalButton";
@@ -40,16 +49,22 @@ const SpotModal = ({
   };
   return (
     spot && (
-      <Modal open={open} onClose={handleClose} className="mx-auto w-[800px]">
+      <Modal open={open} onClose={handleClose} className="mx-auto w-[1000px]">
         <Card component="div">
           <CardContent>
-            <SpotModalButton
-              onClick={() => {
-                handleOpenModal(spot);
-              }}
-            >
-              Open
-            </SpotModalButton>
+            <Box className="flex justify-between">
+              <SpotModalButton
+                onClick={() => {
+                  handleOpenModal(spot);
+                }}
+              >
+                Open
+              </SpotModalButton>
+              <SpotModalButton
+                onClick={handleClose}
+                startIcon={<CloseIcon />}
+              />
+            </Box>
             <Typography variant="h5" component="div">
               {spot.title}
             </Typography>
@@ -60,16 +75,9 @@ const SpotModal = ({
               component="img"
               image={spot.spot_image.secure_url}
               alt={spot.title}
+              className="mx-auto w-[800px]"
             />
           )}
-          <CardContent>
-            {spot.description && <Typography>{spot.description}</Typography>}
-            {spot.link && (
-              <Link to={spot.link} target="_blank">
-                {spot.title}
-              </Link>
-            )}
-          </CardContent>
           {userToken && (
             <SpotModalButton
               startIcon={<RefreshIcon />}

@@ -105,6 +105,7 @@ const VisitPage = ({ url }) => {
         <span>{visitData.title}</span>
         {visitData.city && <span>{visitData.city}</span>}
       </Box>
+      {visitData.description && <p>{visitData.description}</p>}
 
       <MapContainer
         className="mx-auto h-[700px] w-[1000px]"

@@ -32,6 +32,7 @@ const VisitTitleUpdatePage = ({ url }) => {
   const [title, setTitle] = useState("");
   const [city, setCity] = useState("City");
   const [details, setDetails] = useState("City details ...");
+  const [description, setDescription] = useState("Description");
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
@@ -40,12 +41,13 @@ const VisitTitleUpdatePage = ({ url }) => {
         const { data } = await axios.get(`${url}/visits/visit/${id}`);
         //   console.log("update, data: ", data.data[0]);
         setVisitData(data.data[0]);
-        const { title, city, city_details } = data.data[0];
+        const { title, city, city_details, description } = data.data[0];
         setTitle(title);
         if (city) {
           setCity(city);
         }
         if (city_details) setDetails(city_details);
+        if (description) setDescription(description);
       } catch (error) {
         console.log("Update visit title, error: ", error.message);
       }
@@ -60,7 +62,12 @@ const VisitTitleUpdatePage = ({ url }) => {
       try {
         const { data } = await axios.put(
           `${url}/visits/visit/${id}/update`,
-          { title: title, city: city, details: details },
+          {
+            title: title,
+            city: city,
+            details: details,
+            description: description,
+          },
           { headers: { Authorization: `Bearer ${userToken}` } },
         );
         navigate(`/visit/${id}`, { state: { userToken: userToken } });
@@ -103,6 +110,13 @@ const VisitTitleUpdatePage = ({ url }) => {
               value={details && details}
               onChange={(event) => {
                 setDetails(event.target.value);
+              }}
+            />
+            <VisitFormTextField
+              label="Description"
+              value={description && description}
+              onChange={(event) => {
+                setDescription(event.target.value);
               }}
             />
             {errorMessage && (
