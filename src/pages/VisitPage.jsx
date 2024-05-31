@@ -53,14 +53,43 @@ const VisitPage = ({ url }) => {
     setOpen(false);
   };
 
+  // 1st version component (with useMap())
+  // const UserLocationMarker = () => {
+  //   const [position, setPosition] = useState(null);
+  //   const map = useMap();
+  //   map.locate().on("locationfound", function (event) {
+  //     setPosition(event.latlng);
+  //   });
+  //   return position === null ? null : (
+  //     <CircleMarker center={position}></CircleMarker>
+  //   );
+  // };
+
+  // 2nd version component (with navigator.geolocation)
   const UserLocationMarker = () => {
     const [position, setPosition] = useState(null);
-    const map = useMap();
-    map.locate().on("locationfound", function (event) {
-      setPosition(event.latlng);
-    });
+
+    console.log("user location marker comp");
+
+    const success = (position) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      console.log(`latitude: ${latitude}, longitude: ${longitude}`);
+      setPosition({ latitude, longitude });
+    };
+
+    const error = () => {
+      console.log("Unable to retrieve your geolocation");
+    };
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else console.log("Geolocation not supported");
+
     return position === null ? null : (
-      <CircleMarker center={position}></CircleMarker>
+      <CircleMarker
+        center={[position.latitude, position.longitude]}
+      ></CircleMarker>
     );
   };
 
