@@ -88,7 +88,7 @@ const HomePage = ({ url, userToken }) => {
   return isLoading ? (
     <Loader />
   ) : (
-    <Box component="main" className="container mx-auto w-[1000px] font-roboto">
+    <Box component="main" className=" mx-auto w-[90%] font-roboto ">
       <CssBaseline />
       <Box component="div">
         {/* No visit */}
@@ -161,15 +161,17 @@ const HomePage = ({ url, userToken }) => {
           </Box>
         )}
         {/* Link to create a visit page */}
-        <Box className="flex justify-end">
+        <Box className="flex w-[90%] justify-end pt-2 sm:pt-3 md:pt-4">
           <Link to="/visit/form" className="no-underline">
             <Button
               variant="outlined"
               startIcon={<AddCircleIcon />}
               size="large"
-              className="text-lg"
+              className="px-1 py-1  md:px-3 md:py-2 "
             >
-              <Typography>Create a new visit</Typography>
+              <Typography className="text-md sm:text-lg">
+                Create a new visit
+              </Typography>
             </Button>
           </Link>
         </Box>

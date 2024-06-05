@@ -59,7 +59,7 @@ const Signup = ({ url, setUserToken }) => {
   };
 
   return (
-    <Box component="main" className="mx-auto w-[1000px] font-roboto">
+    <Box component="main" className="mx-auto w-[90%] font-roboto">
       <Box component="div">
         <Box component="form" className="flex flex-col ">
           <UserFormTextField
@@ -99,7 +99,7 @@ const Signup = ({ url, setUserToken }) => {
               <WarningAmberIcon sx={{ fontSize: "24px" }} /> {errorMessage}
             </Box>
           )}
-          <Box className="mx-auto">
+          <Box className="mx-auto pt-2 sm:pt-3 md:pt-4">
             <UserFormButton onClick={handleFormSubmit}>Sign up</UserFormButton>
           </Box>
         </Box>
@@ -110,11 +110,13 @@ const Signup = ({ url, setUserToken }) => {
               to="/author/login"
               state={{ from: location.state.from }}
             >
-              Already have an account ?
+              <span className="text-black">Already have an account ?</span>{" "}
+              <span>Log in</span>
             </UserFormLink>
           ) : (
             <UserFormLink to="/author/login">
-              Already have an account ?
+              <span className="text-black">Already have an account ?</span>{" "}
+              <span>Log in</span>
             </UserFormLink>
           )}
         </Box>

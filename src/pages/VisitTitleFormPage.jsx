@@ -8,6 +8,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 // Components
+import VisitFormTitle from "../components/VisitFormTitle";
 import VisitFormTextField from "../components/VisitFormTextField";
 import VisitFormButton from "../components/VisitFormButton";
 
@@ -44,9 +45,10 @@ const VisitTitleFormPage = ({ url, userToken }) => {
   return !userToken ? (
     <Navigate to="/author/login" state={{ from: "/visit/form" }} />
   ) : (
-    <Box component="main" className="mx-auto w-[1000px] font-roboto">
+    <Box component="main" className="mx-auto w-[90%] font-roboto">
       <Box component="div">
-        <Typography variant="h4">New visit</Typography>
+        <VisitFormTitle>New visit</VisitFormTitle>
+        {/* <Typography variant="h4">New visit</Typography> */}
         <Box component="div">
           <Box component="form" className="flex flex-col">
             <VisitFormTextField
@@ -81,7 +83,7 @@ const VisitTitleFormPage = ({ url, userToken }) => {
               </Box>
             )}
           </Box>
-          <Box>
+          <Box className="pt-2 sm:pt-3 md:pt-4">
             <VisitFormButton
               onClick={visitFormSubmit}
               startIcon={<AddCircleIcon />}

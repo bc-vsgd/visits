@@ -36,42 +36,58 @@ const SpotsFormsPage = ({ url }) => {
   return isLoading ? (
     <Loader />
   ) : (
-    <Box component="div" className="mx-auto w-[1000px] font-roboto">
-      {/* Display visit title */}
-      <Box component="div">
-        <Typography variant="h5">{title}</Typography>
-        <Typography variant="h6">{city}</Typography>
-        <Typography>{details}</Typography>
-        <Typography>{description}</Typography>
-      </Box>
-      {/* Display existing spots */}
-      {data && (
-        <Box component="div">
-          {data.map((spot, index) => {
-            return (
-              <Card key={index} className="w-80" component="div">
-                <CardMedia
-                  component="img"
-                  image={spot.spot_image.secure_url}
-                  alt={spot.title}
-                />
-                <Box component="div">{spot.title}</Box>
-              </Card>
-            );
-          })}
+    <Box
+      component="div"
+      className="mx-auto w-[95%] font-roboto sm:w-[90%] md:w-4/5"
+    >
+      <Box className="mx-auto w-[90%]">
+        {/* Display visit title */}
+        <Box
+          component="div"
+          className="mb-3 border-x-0 border-b border-t-0 border-solid border-black sm:mb-5"
+        >
+          <Typography className="pb-1 text-2xl sm:pb-2 sm:text-3xl md:pb-3">
+            {title}
+          </Typography>
+          <Typography className="pb-1 text-xl sm:pb-2 sm:text-2xl md:pb-3">
+            {city}
+          </Typography>
+          <Typography className="pb-1 text-sm sm:pb-2 sm:text-base md:pb-3">
+            {details}
+          </Typography>
+          <Typography className=" pb-2 text-sm  sm:text-base md:pb-3">
+            {description}
+          </Typography>
         </Box>
-      )}
+        {/* Display existing spots */}
+        {data && (
+          <Box component="div">
+            {data.map((spot, index) => {
+              return (
+                <Card key={index} className="w-80" component="div">
+                  <CardMedia
+                    component="img"
+                    image={spot.spot_image.secure_url}
+                    alt={spot.title}
+                  />
+                  <Box component="div">{spot.title}</Box>
+                </Card>
+              );
+            })}
+          </Box>
+        )}
 
-      {/* New spot form */}
-      <Box component="div">
-        <OneSpotForm
-          url={url}
-          id={id}
-          setIsLoading={setIsLoading}
-          dataLength={dataLength}
-          setDataLength={setDataLength}
-          userToken={userToken}
-        />
+        {/* New spot form */}
+        <Box component="div">
+          <OneSpotForm
+            url={url}
+            id={id}
+            setIsLoading={setIsLoading}
+            dataLength={dataLength}
+            setDataLength={setDataLength}
+            userToken={userToken}
+          />
+        </Box>
       </Box>
     </Box>
   );

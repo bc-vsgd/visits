@@ -45,7 +45,7 @@ const LoginPage = ({ url, setUserToken }) => {
     }
   };
   return (
-    <Box component="main" className="mx-auto w-[1000px] font-roboto">
+    <Box component="main" className="mx-auto w-[90%] font-roboto">
       <Box component="div">
         <Box component="form" className="flex flex-col">
           <UserFormTextField
@@ -53,6 +53,7 @@ const LoginPage = ({ url, setUserToken }) => {
             label="Email"
             onChange={(event) => {
               setEmail(event.target.value);
+              setErrorMessage("");
             }}
           />
           <UserFormTextField
@@ -60,6 +61,7 @@ const LoginPage = ({ url, setUserToken }) => {
             label="Password"
             onChange={(event) => {
               setPassword(event.target.value);
+              setErrorMessage("");
             }}
           />
           {errorMessage && (
@@ -67,7 +69,7 @@ const LoginPage = ({ url, setUserToken }) => {
               <WarningAmberIcon sx={{ fontSize: "24px" }} /> {errorMessage}
             </Box>
           )}
-          <Box className="mx-auto">
+          <Box className="mx-auto pt-2 sm:pt-3 md:pt-4">
             <UserFormButton onClick={handleFormSubmit}>Log in</UserFormButton>
           </Box>
         </Box>
@@ -78,10 +80,14 @@ const LoginPage = ({ url, setUserToken }) => {
               to="/author/signup"
               state={{ from: location.state.from }}
             >
-              Create an account
+              <span className="text-black">Not registered ?</span>{" "}
+              <span>Create an account</span>
             </UserFormLink>
           ) : (
-            <UserFormLink to="/author/signup">Create an account</UserFormLink>
+            <UserFormLink to="/author/signup">
+              <span className="text-black">Not registered ?</span>{" "}
+              <span>Create an account</span>
+            </UserFormLink>
           )}
         </Box>
       </Box>

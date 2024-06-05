@@ -7,7 +7,7 @@ const UserFormButton = ({ children, startIcon, onClick }) => {
       variant="outlined"
       startIcon={startIcon}
       size="large"
-      className="text-lg"
+      className="text-md px-1 py-1 sm:text-lg md:px-3 md:py-2 "
     >
       {children}
     </Button>

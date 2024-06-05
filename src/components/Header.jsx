@@ -10,10 +10,13 @@ import HeaderButton from "./HeaderButton";
 const Header = ({ userToken, setUserToken }) => {
   const navigate = useNavigate();
   return (
-    <Box component="header" className="mb-4 flex font-roboto">
+    <Box
+      component="header"
+      className="mb-4 flex border-x-0 border-b border-t-0 border-solid pb-2 font-roboto sm:pb-3  md:pb-4"
+    >
       <Box
         component="div"
-        className="mx-auto my-0 flex w-3/4 justify-between border-2 border-solid border-blue-500"
+        className="mx-auto mb-0 mt-2 flex w-3/4 justify-between "
       >
         <Box component="div">
           <Link to="/">

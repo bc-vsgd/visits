@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // MUI components
-import { Box, Card, CardMedia, CardActions } from "@mui/material";
+import { Box, Card, CardMedia, CardActions, Typography } from "@mui/material";
 // MUI icons
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import UploadIcon from "@mui/icons-material/Upload";
@@ -94,16 +94,21 @@ const OneSpotForm = ({
   return (
     <Box component="div">
       <Box component="form" className="flex flex-col">
+        <Typography className="pb-1  text-xl sm:pb-2 sm:text-2xl ">
+          New spot
+        </Typography>
+
         {/* Pictures */}
-        <Box component="div">
+        <Box component="div" className="h-16 sm:h-20 ">
           <label for="visit-input-files">
-            <p className="  w-48 rounded-lg border-2 border-solid bg-gray-100 py-3 text-center font-roboto">
+            {/* <p className="  w-48 rounded-lg border-2 border-solid bg-gray-100 py-3 text-center font-roboto"> */}
+            <p className=" w-24 rounded-lg border-2 border-solid px-2 py-2 text-center font-roboto sm:w-28 sm:text-lg ">
               Choose files
             </p>
           </label>
           <input
             id="visit-input-files"
-            className="h-8 opacity-0"
+            className="h-0 border border-solid opacity-0 "
             type="file"
             multiple
             onChange={(event) => {
@@ -126,12 +131,12 @@ const OneSpotForm = ({
           />
           {/* Display pictures */}
           {Object.keys(files).length !== 0 && (
-            <Box component="div" className="flex">
+            <Box component="div">
               {Object.keys(files).map((fileKey, index) => {
                 return (
                   <Card key={index}>
                     <CardMedia
-                      className="w-80"
+                      className=" w-[25%]"
                       component="img"
                       alt="Picture"
                       image={URL.createObjectURL(files[fileKey])}
@@ -151,7 +156,7 @@ const OneSpotForm = ({
           )}
         </Box>
         {/* Title, description, link */}
-        <Box component="div" className="flex flex-col">
+        <Box component="div" className=" flex flex-col">
           {/* Title */}
           <VisitFormTextField
             required={true}
@@ -213,7 +218,7 @@ const OneSpotForm = ({
             </Box>
           )}
         </Box>
-        <Box>
+        <Box className="pt-2 sm:pt-3 md:pt-4">
           {/* Buttons: add the spot & register the visit*/}
           <VisitFormButton
             startIcon={<AddCircleIcon />}
