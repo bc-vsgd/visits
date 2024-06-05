@@ -61,16 +61,25 @@ const SpotsFormsPage = ({ url }) => {
         </Box>
         {/* Display existing spots */}
         {data && (
-          <Box component="div">
+          <Box
+            component="div"
+            className="mx-auto flex w-[100%] flex-wrap gap-1"
+          >
             {data.map((spot, index) => {
               return (
-                <Card key={index} className="w-80" component="div">
+                <Card
+                  key={index}
+                  className="mx-auto w-[80%] sm:w-[48%] xl:w-[32%]"
+                  component="div"
+                >
                   <CardMedia
                     component="img"
                     image={spot.spot_image.secure_url}
                     alt={spot.title}
                   />
-                  <Box component="div">{spot.title}</Box>
+                  <Box component="div" className="p-2">
+                    {spot.title}
+                  </Box>
                 </Card>
               );
             })}

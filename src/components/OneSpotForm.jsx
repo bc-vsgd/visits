@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // MUI components
-import { Box, Card, CardMedia, CardActions, Typography } from "@mui/material";
+import { Box, Card, CardMedia, Typography } from "@mui/material";
 // MUI icons
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import UploadIcon from "@mui/icons-material/Upload";
@@ -101,7 +101,6 @@ const OneSpotForm = ({
         {/* Pictures */}
         <Box component="div" className="h-16 sm:h-20 ">
           <label for="visit-input-files">
-            {/* <p className="  w-48 rounded-lg border-2 border-solid bg-gray-100 py-3 text-center font-roboto"> */}
             <p className=" w-24 rounded-lg border-2 border-solid px-2 py-2 text-center font-roboto sm:w-28 sm:text-lg ">
               Choose files
             </p>
@@ -129,26 +128,34 @@ const OneSpotForm = ({
               setErrorMessage("");
             }}
           />
+        </Box>
+        <Box>
           {/* Display pictures */}
           {Object.keys(files).length !== 0 && (
-            <Box component="div">
+            <Box
+              component="div"
+              className="mx-auto flex w-[100%] flex-wrap gap-1"
+            >
               {Object.keys(files).map((fileKey, index) => {
                 return (
-                  <Card key={index}>
+                  <Card
+                    key={index}
+                    className="relative mx-auto w-[80%] sm:w-[48%] xl:w-[32%]"
+                  >
                     <CardMedia
-                      className=" w-[25%]"
+                      className="mx-auto "
                       component="img"
                       alt="Picture"
                       image={URL.createObjectURL(files[fileKey])}
                     />
-                    <CardActions className="flex justify-end">
-                      <VisitFormButton
-                        onClick={() => {
-                          deleteFile(fileKey);
-                        }}
-                        startIcon={<DeleteIcon />}
-                      />
-                    </CardActions>
+                    <button
+                      onClick={() => {
+                        deleteFile(fileKey);
+                      }}
+                      className="absolute bottom-1 right-1 rounded-full border border-blue-500 bg-white pt-1"
+                    >
+                      <DeleteIcon className="text-blue-500" />
+                    </button>
                   </Card>
                 );
               })}
@@ -218,7 +225,7 @@ const OneSpotForm = ({
             </Box>
           )}
         </Box>
-        <Box className="pt-2 sm:pt-3 md:pt-4">
+        <Box className="flex gap-2 pt-2 sm:pt-3 md:pt-4">
           {/* Buttons: add the spot & register the visit*/}
           <VisitFormButton
             startIcon={<AddCircleIcon />}

@@ -17,7 +17,7 @@ import {
   CircleMarker,
 } from "react-leaflet";
 // MUI components
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 // Icons
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -129,15 +129,29 @@ const VisitPage = ({ url }) => {
   return isVisitLoading || isSpotsLoading ? (
     <Loader />
   ) : (
-    <Box component="main" className="relative mx-auto w-[1000px]  font-roboto">
-      <Box component="div" className="flex gap-x-3 text-lg ">
-        <span>{visitData.title}</span>
-        {visitData.city && <span>{visitData.city}</span>}
+    <Box
+      component="main"
+      className=" mx-auto w-[95%] font-roboto sm:w-[90%] md:w-4/5"
+    >
+      <Box component="div" className="  ">
+        <Typography className="  pb-1 text-2xl sm:pb-2 sm:text-3xl md:pb-3">
+          {visitData.title}
+        </Typography>
+        {visitData.city && (
+          <Typography className="  pb-1 text-xl sm:pb-2 sm:text-2xl md:pb-3 ">
+            {visitData.city}
+          </Typography>
+        )}
       </Box>
-      {visitData.description && <p>{visitData.description}</p>}
+
+      {visitData.description && (
+        <Typography className=" pb-3 text-sm  sm:text-base md:pb-5">
+          {visitData.description}
+        </Typography>
+      )}
 
       <MapContainer
-        className="mx-auto h-[700px] w-[1000px]"
+        className="visit-page-map"
         center={centerCoords}
         zoom={12}
         scrollWheelZoom={true}
@@ -190,13 +204,16 @@ const VisitPage = ({ url }) => {
 
       {/* Author authenticated => possibility to update & delete the visit, and to add a spot */}
       {location.state && location.state.userToken === userToken && (
-        <Box component="div" className="flex justify-between">
+        <Box
+          component="div"
+          className="flex justify-between pt-2 sm:pt-3 md:pt-4"
+        >
           <VisitPageLink
             to={`/visit/${id}/update`}
             state={{ userToken: userToken }}
           >
             <VisitPageButton startIcon={<RefreshIcon />}>
-              Update visit title
+              Update
             </VisitPageButton>
           </VisitPageLink>
           <VisitPageButton
@@ -206,7 +223,7 @@ const VisitPage = ({ url }) => {
             }}
             startIcon={<DeleteIcon />}
           >
-            Delete this visit
+            Delete
           </VisitPageButton>
           <VisitPageButton
             onClick={() => {
@@ -227,7 +244,7 @@ const VisitPage = ({ url }) => {
       )}
 
       {/* Create a visit (authenticated or not) */}
-      <Box component="div" className="flex justify-end">
+      <Box component="div" className="flex justify-end pt-2 sm:pt-3 md:pt-4">
         <VisitPageLink to="/visit/form">
           <VisitPageButton startIcon={<AddCircleIcon />}>
             Create a new visit

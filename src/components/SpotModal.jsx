@@ -16,8 +16,6 @@ import {
 // MUI icons
 import RefreshIcon from "@mui/icons-material/Refresh";
 import CloseIcon from "@mui/icons-material/Close";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 // Components
 import SpotDisplayModal from "./SpotDisplayModal";
 import SpotModalButton from "./SpotModalButton";
@@ -49,50 +47,57 @@ const SpotModal = ({
   };
   return (
     spot && (
-      <Modal open={open} onClose={handleClose} className="mx-auto w-[1000px]">
-        <Card component="div">
+      <Modal open={open} onClose={handleClose} className="mx-auto font-roboto">
+        <Card component="div" className="pb-4">
           <CardContent>
-            <Box className="flex justify-between">
-              <SpotModalButton
-                onClick={() => {
-                  handleOpenModal(spot);
-                }}
-              >
-                Open
-              </SpotModalButton>
-              <SpotModalButton
-                onClick={handleClose}
-                startIcon={<CloseIcon />}
-              />
+            <Box className="mx-auto w-[95%]  sm:w-[90%] md:w-4/5">
+              <Box className="mb-1 flex justify-between  sm:mb-2  md:mb-3">
+                <SpotModalButton
+                  onClick={() => {
+                    handleOpenModal(spot);
+                  }}
+                >
+                  Open
+                </SpotModalButton>
+                <button
+                  onClick={handleClose}
+                  className="flex h-6 items-center justify-center rounded-lg border border-blue-500 bg-white sm:h-8 sm:w-8 md:h-10 md:w-10"
+                >
+                  <CloseIcon className=" text-sm text-blue-500  sm:text-xl md:text-2xl" />
+                </button>
+              </Box>
+              <Typography className="  pb-1 text-2xl sm:pb-2 sm:text-3xl md:pb-3">
+                {spot.title}
+              </Typography>
             </Box>
-            <Typography variant="h5" component="div">
-              {spot.title}
-            </Typography>
           </CardContent>
 
           {spot.spot_image && (
-            <CardMedia
-              component="img"
-              image={spot.spot_image.secure_url}
-              alt={spot.title}
-              className="mx-auto w-[800px]"
-            />
+            <div className="mx-auto w-[80%] sm:w-[70%] md:w-2/3  lg:ml-[200px] lg:w-1/2">
+              <CardMedia
+                component="img"
+                image={spot.spot_image.secure_url}
+                alt={spot.title}
+              />
+            </div>
           )}
           {userToken && (
-            <SpotModalButton
-              startIcon={<RefreshIcon />}
-              onClick={() => {
-                navigate(`/visit/spot/${spot._id}/update`, {
-                  state: {
-                    from: `/visit/${visitId}`,
-                    userToken: userToken,
-                    spotsDataLength: spotsDataLength,
-                  },
-                });
-              }}
-            >
-              Update this spot
-            </SpotModalButton>
+            <div className=" mx-auto w-[95%] pt-2 sm:w-[90%] sm:pt-3  md:w-4/5 md:pt-4">
+              <SpotModalButton
+                startIcon={<RefreshIcon />}
+                onClick={() => {
+                  navigate(`/visit/spot/${spot._id}/update`, {
+                    state: {
+                      from: `/visit/${visitId}`,
+                      userToken: userToken,
+                      spotsDataLength: spotsDataLength,
+                    },
+                  });
+                }}
+              >
+                Update this spot
+              </SpotModalButton>
+            </div>
           )}
           {/* Click => Spot Display Modal: 4th version */}
           <SpotDisplayModal
