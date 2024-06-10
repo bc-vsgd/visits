@@ -24,7 +24,10 @@ const Header = ({ userToken, setUserToken }) => {
           </Link>
         </Box>
         {!userToken ? (
-          <Box component="div" className="flex justify-between ">
+          <Box
+            component="div"
+            className="flex justify-between gap-x-1 sm:gap-x-2 md:gap-x-3"
+          >
             <Box component="div">
               <Link to="/author/signup">
                 <HeaderButton>Sign up</HeaderButton>

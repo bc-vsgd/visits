@@ -144,10 +144,10 @@ const SpotUpdatePage = ({ url }) => {
     return <Loader />;
   }
   return (
-    <Box component="div" className="mx-auto w-[1000px]">
+    <Box component="div" className="mx-auto w-[95%]  sm:w-[90%] md:w-4/5">
       <Box component="form" className=" flex-col">
         {/* Pictures */}
-        <Box component="div" className="flex-col">
+        <Box component="div" className="mb-2 flex-col sm:mb-3 md:mb-4 lg:mb-5">
           <label for="input-files">
             <p className="  w-48 rounded-lg border-2 border-solid bg-white py-3 text-center font-roboto">
               Choose files
@@ -176,81 +176,89 @@ const SpotUpdatePage = ({ url }) => {
               setErrorMessage("");
             }}
           />
-          {/* Display pictures of existing spot */}
-          <Box className="flex">
+          {/* Display existing pictures of spot */}
+          <Box component="div" className="mx-auto mb-2 flex flex-wrap gap-2">
             {/* Spot image = 1st picture */}
             {image && (
-              <Card>
+              <Card className=" mx-auto w-[80%] sm:w-3/4 md:w-[48%] lg:w-[32%]">
                 <CardMedia
-                  className="w-80"
+                  className="mx-auto w-[90%] "
                   component="img"
                   alt="Picture"
                   image={image.secure_url}
                 />
                 <CardActions className="flex justify-end">
-                  <SpotModalButton
-                    startIcon={<DeleteIcon />}
+                  <button
+                    className="rounded-lg border-0 bg-white text-blue-500"
                     onClick={() => {
                       setImage(null);
                     }}
-                  ></SpotModalButton>
+                  >
+                    {<DeleteIcon />}
+                  </button>
                 </CardActions>
               </Card>
             )}
 
             {/* Spot pictures: other pictures */}
-            <Box className="flex">
-              {pictures &&
-                pictures.map((picture, index) => {
-                  return (
-                    <Card key={picture.public_id}>
-                      <CardMedia
-                        className="w-80"
-                        component="img"
-                        alt="Picture"
-                        image={picture.secure_url}
-                      />
-                      <CardActions className="flex justify-end">
-                        <SpotModalButton
-                          startIcon={<DeleteIcon />}
-                          onClick={() => {
-                            setPictures((prev) => {
-                              const newArr = [...prev];
-                              if (newArr.length === 1) {
-                                return [];
-                              } else {
-                                newArr.splice(index, 1);
-
-                                return newArr;
-                              }
-                            });
-                          }}
-                        ></SpotModalButton>
-                      </CardActions>
-                    </Card>
-                  );
-                })}
-            </Box>
+            {pictures &&
+              pictures.map((picture, index) => {
+                return (
+                  <Card
+                    key={picture.public_id}
+                    className="mx-auto w-[80%] sm:w-3/4 md:w-[48%] lg:w-[32%]"
+                  >
+                    <CardMedia
+                      className="mx-auto w-[90%] "
+                      component="img"
+                      alt="Picture"
+                      image={picture.secure_url}
+                    />
+                    <CardActions className="flex justify-end">
+                      <button
+                        className="rounded-lg border-0 bg-white text-blue-500"
+                        onClick={() => {
+                          setPictures((prev) => {
+                            const newArr = [...prev];
+                            if (newArr.length === 1) {
+                              return [];
+                            } else {
+                              newArr.splice(index, 1);
+                              return newArr;
+                            }
+                          });
+                        }}
+                      >
+                        {<DeleteIcon />}
+                      </button>
+                    </CardActions>
+                  </Card>
+                );
+              })}
           </Box>
           {/* Display selected pictures (by the input) */}
           {Object.keys(files).length !== 0 && (
-            <Box component="div" className="flex">
+            <Box component="div" className="mx-auto flex flex-wrap gap-2">
               {Object.keys(files).map((fileKey, index) => {
                 return (
-                  <Card key={index}>
+                  <Card
+                    key={index}
+                    className="mx-auto w-[80%] sm:w-3/4 md:w-[48%] lg:w-[32%]"
+                  >
                     <CardMedia
-                      className="w-80"
+                      className="mx-auto w-[90%] "
                       component="img"
                       alt="Picture"
                       image={URL.createObjectURL(files[fileKey])}
                     />
                     <CardActions className="flex justify-end">
-                      <SpotModalButton
-                        startIcon={<DeleteIcon />}
+                      <button
                         onClick={() => {
                           deleteFile(fileKey);
                         }}
-                      ></SpotModalButton>
+                      >
+                        {<DeleteIcon />}
+                      </button>
                     </CardActions>
                   </Card>
                 );
@@ -323,7 +331,7 @@ const SpotUpdatePage = ({ url }) => {
         </Box>
 
         {/* Buttons: update & delete the spot */}
-        <Box>
+        <Box className="flex gap-1 sm:gap-2 md:gap-3">
           <SpotModalButton startIcon={<RefreshIcon />} onClick={spotFormSubmit}>
             Update this spot
           </SpotModalButton>
