@@ -149,7 +149,7 @@ const SpotUpdatePage = ({ url }) => {
         {/* Pictures */}
         <Box component="div" className="flex-col">
           <label for="input-files">
-            <p className="  w-48 rounded-lg border-2 border-solid bg-gray-100 py-3 text-center font-roboto">
+            <p className="  w-48 rounded-lg border-2 border-solid bg-white py-3 text-center font-roboto">
               Choose files
             </p>
           </label>

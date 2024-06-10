@@ -70,60 +70,69 @@ const SpotDisplayModal = ({ spot, open, handleClose }) => {
       onClose={() => {
         handleClose();
       }}
+      className="mx-auto font-roboto"
     >
-      <Card
-        sx={{
-          ...modalBoxStyle,
-          bgcolor: "white",
-          width: "50%",
-          height: 800,
-        }}
-      >
+      <Card className="pb-4">
+        {/*  */}
         <CardContent>
-          <Box className="flex justify-end">
-            <SpotModalButton
-              onClick={() => {
-                handleClose();
-              }}
-              startIcon={<CloseIcon />}
-            />
+          <Box className="mx-auto w-[95%]  sm:w-[90%] md:w-4/5">
+            <Box className="mb-1 flex justify-between  sm:mb-2  md:mb-3">
+              <Typography className="  pb-1 text-2xl sm:pb-2 sm:text-3xl md:pb-3">
+                {spot.title}
+              </Typography>
+              <button
+                onClick={handleClose}
+                className="flex h-6 items-center justify-center rounded-lg border border-blue-500 bg-white sm:h-8 sm:w-8 md:h-10 md:w-10"
+              >
+                <CloseIcon className=" text-sm text-blue-500  sm:text-xl md:text-2xl" />
+              </button>
+            </Box>
           </Box>
-          <Box component="div">
-            <Typography>{spot.title}</Typography>
-            <Box className="flex">
-              {picsArray.length > 1 && (
-                <SpotModalButton
+          {/*  */}
+          <Box className="mx-auto flex w-[80%] gap-x-2 sm:w-[70%] md:w-2/3 lg:ml-[200px] lg:w-1/2">
+            {picsArray.length > 1 && (
+              <div className="flex flex-col justify-center">
+                <button
                   onClick={() => {
                     changePicture("-");
                   }}
-                  startIcon={<ChevronLeftIcon />}
-                />
-              )}
+                  className="flex h-6 w-6 items-center justify-center rounded-full border border-blue-500 bg-white sm:h-8 sm:w-8 md:h-10 md:w-10"
+                >
+                  <ChevronLeftIcon className=" text-sm text-blue-500  sm:text-xl md:text-2xl" />
+                </button>
+              </div>
+            )}
+            <div className="mx-auto">
               <CardMedia
                 component="img"
                 image={imgToDisplay}
                 alt={spot.title}
-                className="w-[700px]"
               />
-              {picsArray.length > 1 && (
-                <SpotModalButton
+            </div>
+            {picsArray.length > 1 && (
+              <div className="flex flex-col justify-center">
+                <button
                   onClick={() => {
-                    changePicture("+");
+                    changePicture("-");
                   }}
-                  startIcon={<ChevronRightIcon />}
-                />
-              )}
-            </Box>
-            <CardContent>
-              {spot.description && <Typography>{spot.description}</Typography>}
-              {spot.link && (
-                <Link to={spot.link} target="_blank">
-                  {spot.title}
-                </Link>
-              )}
-            </CardContent>
+                  className="flex h-6 w-6 items-center justify-center rounded-full border border-blue-500 bg-white sm:h-8 sm:w-8 md:h-10 md:w-10"
+                >
+                  <ChevronRightIcon className=" text-sm text-blue-500  sm:text-xl md:text-2xl" />
+                </button>
+              </div>
+            )}
+          </Box>
+          {/*  */}
+          <Box className=" mx-auto w-[95%] pt-2 sm:w-[90%] sm:pt-3  md:w-4/5 md:pt-4">
+            {spot.description && <Typography>{spot.description}</Typography>}
+            {spot.link && (
+              <Link to={spot.link} target="_blank">
+                {spot.title}
+              </Link>
+            )}
           </Box>
         </CardContent>
+        {/*  */}
       </Card>
     </Modal>
   );

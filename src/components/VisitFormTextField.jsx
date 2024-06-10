@@ -1,6 +1,12 @@
 import { TextField } from "@mui/material";
 
-const VisitFormTextField = ({ required, label, value, onChange }) => {
+const VisitFormTextField = ({
+  required,
+  label,
+  value,
+  onChange,
+  multiline,
+}) => {
   return (
     <TextField
       // className="mb-3 w-1/2"
@@ -11,6 +17,7 @@ const VisitFormTextField = ({ required, label, value, onChange }) => {
       label={label}
       value={value}
       onChange={onChange}
+      multiline={multiline}
     />
   );
 };

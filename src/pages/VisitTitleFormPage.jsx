@@ -73,6 +73,7 @@ const VisitTitleFormPage = ({ url, userToken }) => {
             />
             <VisitFormTextField
               label="Description"
+              multiline={true}
               onChange={(event) => {
                 setDescription(event.target.value);
               }}

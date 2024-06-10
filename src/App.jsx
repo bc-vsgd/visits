@@ -78,7 +78,7 @@ function App() {
             path="/visit/form"
             element={<VisitTitleFormPage url={url} userToken={userToken} />}
           />
-          {/* Unused */}
+          {/* Create visit: display visit title, existing spots, new spot form */}
           <Route
             path="/visit/form/:id/spots"
             element={<SpotsFormsPage url={url} />}

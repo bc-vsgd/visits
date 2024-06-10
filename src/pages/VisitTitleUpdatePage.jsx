@@ -17,6 +17,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 // Components
 import Loader from "../components/Loader";
+import VisitFormTitle from "../components/VisitFormTitle";
 import VisitFormTextField from "../components/VisitFormTextField";
 import VisitFormButton from "../components/VisitFormButton";
 
@@ -84,9 +85,9 @@ const VisitTitleUpdatePage = ({ url }) => {
   return !userToken ? (
     <Navigate to="/author/login" state={{ from: "/visit/form" }} />
   ) : (
-    <Box component="main" className="mx-auto w-[1000px] font-roboto">
+    <Box component="main" className="mx-auto w-[90%] font-roboto">
       <Box component="div">
-        <Typography variant="h4">Update visit</Typography>
+        <VisitFormTitle>Update visit</VisitFormTitle>
         <Box component="div">
           <Box component="form" className="flex flex-col">
             <VisitFormTextField
@@ -118,18 +119,21 @@ const VisitTitleUpdatePage = ({ url }) => {
               onChange={(event) => {
                 setDescription(event.target.value);
               }}
+              multiline={true}
             />
             {errorMessage && (
               <Box component="div" className=" flex items-center text-red-500">
                 <WarningAmberIcon sx={{ fontSize: "24px" }} /> {errorMessage}
               </Box>
             )}
-            <VisitFormButton
-              startIcon={<RefreshIcon />}
-              onClick={visitFormSubmit}
-            >
-              Update visit title
-            </VisitFormButton>
+            <Box className="pt-2 sm:pt-3 md:pt-4">
+              <VisitFormButton
+                startIcon={<RefreshIcon />}
+                onClick={visitFormSubmit}
+              >
+                Update visit title
+              </VisitFormButton>
+            </Box>
           </Box>
         </Box>
       </Box>

@@ -1,5 +1,5 @@
 // SPOT MODAL COMPONENT
-// Displays main picture with button 'Open' and button 'Update' if user authenticated
+// Displays main picture with button 'Open' (=> SpotDisplayModal) and button 'Update' if user authenticated (=> SpotUpdatePage)
 
 import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
@@ -82,7 +82,7 @@ const SpotModal = ({
             </div>
           )}
           {userToken && (
-            <div className=" mx-auto w-[95%] pt-2 sm:w-[90%] sm:pt-3  md:w-4/5 md:pt-4">
+            <div className=" mx-auto w-[90%] pt-2 sm:w-[85%] sm:pt-3  md:w-3/4 md:pt-4">
               <SpotModalButton
                 startIcon={<RefreshIcon />}
                 onClick={() => {
